@@ -135,6 +135,75 @@ class AudioManager {
     return this.isMuted;
   }
 
+  public playHover() {
+    if (this.isMuted || !this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const now = this.ctx.currentTime;
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(800, now);
+      osc.frequency.exponentialRampToValueAtTime(1200, now + 0.035);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.035);
+    } catch {
+      // Audio context might be restricted
+    }
+  }
+
+  public playSelect() {
+    if (this.isMuted || !this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const now = this.ctx.currentTime;
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(420, now);
+      osc.frequency.exponentialRampToValueAtTime(140, now + 0.08);
+      gain.gain.setValueAtTime(0.14, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+      osc.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.08);
+    } catch {
+      // Audio context
+    }
+  }
+
+  public playShutter() {
+    if (this.isMuted || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const filter = this.ctx.createBiquadFilter();
+      const gain = this.ctx.createGain();
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(160, now);
+      osc.frequency.exponentialRampToValueAtTime(40, now + 0.14);
+
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(650, now);
+      filter.frequency.exponentialRampToValueAtTime(100, now + 0.14);
+
+      gain.gain.setValueAtTime(0.18, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(this.masterGain || this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.14);
+    } catch {
+      // Audio context
+    }
+  }
+
   public getIsMuted(): boolean {
     return this.isMuted;
   }

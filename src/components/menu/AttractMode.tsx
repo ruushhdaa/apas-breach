@@ -10,6 +10,7 @@ type ActiveOverlay = 'NONE' | 'DISPATCH' | 'SPECIALISTS' | 'FIELD_NOTES' | 'CRED
 interface SpecialistInfo {
   id: string;
   name: string;
+  callsign: string;
   role: string;
   accent: string;
   image: string;
@@ -23,7 +24,8 @@ interface SpecialistInfo {
 const specialistsData: SpecialistInfo[] = [
   {
     id: 'volt',
-    name: 'KABIR "VOLT" RAO',
+    name: 'KABIR RAO',
+    callsign: 'VOLT',
     role: 'Senior Power Systems Engineer',
     accent: '#F0A500',
     image: voltImg,
@@ -31,38 +33,39 @@ const specialistsData: SpecialistInfo[] = [
     tool: 'Volt catches energy spikes before they cascade. He keeps the servers cool when the grid begins to buckle.',
     weakness: 'Water is not his problem until it is. He treats cooling as a power issue.',
     stats: [
-      { label: 'Power Analysis', value: 90 },
-      { label: 'Water Systems', value: 30 },
-      { label: 'Compliance', value: 40 },
-      { label: 'Crisis Response', value: 85 },
+      { label: 'POWER GRID CONTROL', value: 90 },
+      { label: 'WATER MANAGEMENT', value: 30 },
+      { label: 'REGULATORY AUDIT', value: 40 },
+      { label: 'CRISIS RESILIENCE', value: 85 },
     ],
     backdrop: (
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 280 260" fill="none">
-        <rect x="20" y="20" width="70" height="220" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <line x1="20" y1="55" x2="90" y2="55" stroke="#3A4156" strokeWidth="1" />
-        <line x1="20" y1="90" x2="90" y2="90" stroke="#3A4156" strokeWidth="1" />
-        <line x1="20" y1="125" x2="90" y2="125" stroke="#3A4156" strokeWidth="1" />
-        <line x1="20" y1="160" x2="90" y2="160" stroke="#3A4156" strokeWidth="1" />
-        <line x1="20" y1="195" x2="90" y2="195" stroke="#3A4156" strokeWidth="1" />
-        <rect x="105" y="10" width="75" height="230" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <line x1="105" y1="45" x2="180" y2="45" stroke="#3A4156" strokeWidth="1" />
-        <line x1="105" y1="80" x2="180" y2="80" stroke="#3A4156" strokeWidth="1" />
-        <line x1="105" y1="115" x2="180" y2="115" stroke="#3A4156" strokeWidth="1" />
-        <line x1="105" y1="150" x2="180" y2="150" stroke="#3A4156" strokeWidth="1" />
-        <line x1="105" y1="185" x2="180" y2="185" stroke="#3A4156" strokeWidth="1" />
-        <line x1="105" y1="220" x2="180" y2="220" stroke="#3A4156" strokeWidth="1" />
-        <rect x="195" y="20" width="65" height="220" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <line x1="195" y1="55" x2="260" y2="55" stroke="#3A4156" strokeWidth="1" />
-        <line x1="195" y1="90" x2="260" y2="90" stroke="#3A4156" strokeWidth="1" />
-        <line x1="195" y1="125" x2="260" y2="125" stroke="#3A4156" strokeWidth="1" />
-        <line x1="195" y1="160" x2="260" y2="160" stroke="#3A4156" strokeWidth="1" />
-        <line x1="195" y1="195" x2="260" y2="195" stroke="#3A4156" strokeWidth="1" />
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25" viewBox="0 0 280 260" fill="none">
+        <rect x="20" y="20" width="70" height="220" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <line x1="20" y1="55" x2="90" y2="55" stroke="#54402C" strokeWidth="1" />
+        <line x1="20" y1="90" x2="90" y2="90" stroke="#54402C" strokeWidth="1" />
+        <line x1="20" y1="125" x2="90" y2="125" stroke="#54402C" strokeWidth="1" />
+        <line x1="20" y1="160" x2="90" y2="160" stroke="#54402C" strokeWidth="1" />
+        <line x1="20" y1="195" x2="90" y2="195" stroke="#54402C" strokeWidth="1" />
+        <rect x="105" y="10" width="75" height="230" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <line x1="105" y1="45" x2="180" y2="45" stroke="#54402C" strokeWidth="1" />
+        <line x1="105" y1="80" x2="180" y2="80" stroke="#54402C" strokeWidth="1" />
+        <line x1="105" y1="115" x2="180" y2="115" stroke="#54402C" strokeWidth="1" />
+        <line x1="105" y1="150" x2="180" y2="150" stroke="#54402C" strokeWidth="1" />
+        <line x1="105" y1="185" x2="180" y2="185" stroke="#54402C" strokeWidth="1" />
+        <line x1="105" y1="220" x2="180" y2="220" stroke="#54402C" strokeWidth="1" />
+        <rect x="195" y="20" width="65" height="220" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <line x1="195" y1="55" x2="260" y2="55" stroke="#54402C" strokeWidth="1" />
+        <line x1="195" y1="90" x2="260" y2="90" stroke="#54402C" strokeWidth="1" />
+        <line x1="195" y1="125" x2="260" y2="125" stroke="#54402C" strokeWidth="1" />
+        <line x1="195" y1="160" x2="260" y2="160" stroke="#54402C" strokeWidth="1" />
+        <line x1="195" y1="195" x2="260" y2="195" stroke="#54402C" strokeWidth="1" />
       </svg>
     ),
   },
   {
     id: 'ananya',
     name: 'DR. ANANYA SEN',
+    callsign: 'SPECTRE',
     role: 'Environmental Compliance Officer',
     accent: '#4A6B7A',
     image: ananyaImg,
@@ -70,27 +73,28 @@ const specialistsData: SpecialistInfo[] = [
     tool: 'Ananya has access to the creek monitoring network. She can see what the facility is doing to the water before the regulator does.',
     weakness: 'She has no authority over operations. She can only advise. You decide.',
     stats: [
-      { label: 'Power Analysis', value: 20 },
-      { label: 'Water Systems', value: 90 },
-      { label: 'Compliance', value: 80 },
-      { label: 'Crisis Response', value: 50 },
+      { label: 'POWER GRID CONTROL', value: 20 },
+      { label: 'WATER MANAGEMENT', value: 90 },
+      { label: 'REGULATORY AUDIT', value: 85 },
+      { label: 'CRISIS RESILIENCE', value: 50 },
     ],
     backdrop: (
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 280 260" fill="none">
-        <rect x="0" y="45" width="280" height="26" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <circle cx="70" cy="58" r="16" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <circle cx="70" cy="58" r="7" fill="#1A1F2E" stroke="#3A4156" strokeWidth="1" />
-        <rect x="0" y="115" width="280" height="34" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <circle cx="210" cy="132" r="20" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <circle cx="210" cy="132" r="8" fill="#1A1F2E" stroke="#3A4156" strokeWidth="1" />
-        <rect x="0" y="185" width="280" height="22" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <circle cx="130" cy="196" r="14" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25" viewBox="0 0 280 260" fill="none">
+        <rect x="0" y="45" width="280" height="26" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <circle cx="70" cy="58" r="16" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <circle cx="70" cy="58" r="7" fill="#18130F" stroke="#54402C" strokeWidth="1" />
+        <rect x="0" y="115" width="280" height="34" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <circle cx="210" cy="132" r="20" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <circle cx="210" cy="132" r="8" fill="#18130F" stroke="#54402C" strokeWidth="1" />
+        <rect x="0" y="185" width="280" height="22" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <circle cx="130" cy="196" r="14" fill="#241E18" stroke="#54402C" strokeWidth="1" />
       </svg>
     ),
   },
   {
     id: 'tara',
-    name: "TARA \"ZERO\" D'SOUZA",
+    name: "TARA D'SOUZA",
+    callsign: 'ZERO',
     role: 'Water Use Efficiency Lead',
     accent: '#4A7C59',
     image: taraImg,
@@ -98,22 +102,22 @@ const specialistsData: SpecialistInfo[] = [
     tool: 'Tara controls the recirculation ratios. She can stretch the water budget further than anyone else — but not forever.',
     weakness: 'Her optimisations take time to kick in. In a fast crisis, she is always one step behind.',
     stats: [
-      { label: 'Power Analysis', value: 40 },
-      { label: 'Water Systems', value: 80 },
-      { label: 'Compliance', value: 60 },
-      { label: 'Crisis Response', value: 40 },
+      { label: 'POWER GRID CONTROL', value: 40 },
+      { label: 'WATER MANAGEMENT', value: 85 },
+      { label: 'REGULATORY AUDIT', value: 65 },
+      { label: 'CRISIS RESILIENCE', value: 45 },
     ],
     backdrop: (
-      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-30" viewBox="0 0 280 260" fill="none">
-        <rect x="15" y="25" width="250" height="210" fill="#252B3B" stroke="#3A4156" strokeWidth="1" />
-        <line x1="15" y1="65" x2="265" y2="65" stroke="#3A4156" strokeWidth="1" />
-        <line x1="15" y1="105" x2="265" y2="105" stroke="#3A4156" strokeWidth="1" />
-        <line x1="15" y1="145" x2="265" y2="145" stroke="#3A4156" strokeWidth="1" />
-        <line x1="15" y1="185" x2="265" y2="185" stroke="#3A4156" strokeWidth="1" />
-        <line x1="65" y1="25" x2="65" y2="235" stroke="#3A4156" strokeWidth="1" />
-        <line x1="115" y1="25" x2="115" y2="235" stroke="#3A4156" strokeWidth="1" />
-        <line x1="165" y1="25" x2="165" y2="235" stroke="#3A4156" strokeWidth="1" />
-        <line x1="215" y1="25" x2="215" y2="235" stroke="#3A4156" strokeWidth="1" />
+      <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-25" viewBox="0 0 280 260" fill="none">
+        <rect x="15" y="25" width="250" height="210" fill="#241E18" stroke="#54402C" strokeWidth="1" />
+        <line x1="15" y1="65" x2="265" y2="65" stroke="#54402C" strokeWidth="1" />
+        <line x1="15" y1="105" x2="265" y2="105" stroke="#54402C" strokeWidth="1" />
+        <line x1="15" y1="145" x2="265" y2="145" stroke="#54402C" strokeWidth="1" />
+        <line x1="15" y1="185" x2="265" y2="185" stroke="#54402C" strokeWidth="1" />
+        <line x1="65" y1="25" x2="65" y2="235" stroke="#54402C" strokeWidth="1" />
+        <line x1="115" y1="25" x2="115" y2="235" stroke="#54402C" strokeWidth="1" />
+        <line x1="165" y1="25" x2="165" y2="235" stroke="#54402C" strokeWidth="1" />
+        <line x1="215" y1="25" x2="215" y2="235" stroke="#54402C" strokeWidth="1" />
       </svg>
     ),
   },
@@ -121,19 +125,25 @@ const specialistsData: SpecialistInfo[] = [
 
 const fieldNotesCards = [
   {
-    label: 'WATER USE',
+    tag: 'INTEL // WATER CONSUMPTION',
+    label: 'WATER FOOTPRINT',
     fact: 'A hyperscale data centre can consume between 1 and 5 litres of water per kilowatt-hour of compute, depending on cooling method and climate.',
-    source: 'SOURCE — [TODO_VERIFY]',
+    source: 'SCADA ARCHIVE // METERING LOG 04',
+    code: 'REF-H2O-882',
   },
   {
+    tag: 'INTEL // EVAPORATIVE CYCLES',
     label: 'COOLING SYSTEMS',
     fact: 'Evaporative cooling towers are significantly more water-intensive than air-cooled systems, but they consume far less electricity to achieve the same heat rejection.',
-    source: 'SOURCE — [TODO_VERIFY]',
+    source: 'ENGINEERING SPEC // TOWERS 1-4',
+    code: 'REF-TWR-309',
   },
   {
+    tag: 'INTEL // RUNOFF CANAL',
     label: 'THERMAL DISCHARGE',
     fact: 'Warm water discharged into natural waterways raises ambient temperature, reduces dissolved oxygen, and disrupts aquatic ecosystems — a process called thermal pollution.',
-    source: 'SOURCE — [TODO_VERIFY]',
+    source: 'CREEK SENSOR TELEMETRY // BUOY 7',
+    code: 'REF-ENV-412',
   },
 ];
 
@@ -162,6 +172,19 @@ export const AttractMode: React.FC = () => {
     const newMuted = audioManager.toggleMute();
     setIsMuted(newMuted);
     setAudioStarted(true);
+    if (!newMuted) {
+      audioManager.playSelect();
+    }
+  };
+
+  const handleOpenOverlay = (overlay: ActiveOverlay) => {
+    audioManager.playShutter();
+    setActiveOverlay(overlay);
+  };
+
+  const handleCloseOverlay = () => {
+    audioManager.playSelect();
+    setActiveOverlay('NONE');
   };
 
   // Slowly ticking HHI readout: baseline 38
@@ -189,6 +212,7 @@ export const AttractMode: React.FC = () => {
 
   // Specialist selection handler (NEW GAME flow)
   const handleSelectSpecialist = (spec: SpecialistInfo) => {
+    audioManager.playSelect();
     setSelectedSpecialist(spec.name);
     gameModeRef.current = true;
     setActiveOverlay('NONE');
@@ -197,8 +221,8 @@ export const AttractMode: React.FC = () => {
     targetLookAtRef.current = new THREE.Vector3(spec.xPos * 0.4, 3.2, 10);
   };
 
-  // Return to attract mode from game mode
   const handleReturnToAttract = () => {
+    audioManager.playSelect();
     setSelectedSpecialist(null);
     gameModeRef.current = false;
     targetCamPosRef.current = null;
@@ -428,15 +452,13 @@ export const AttractMode: React.FC = () => {
     const taraSprite = createHeroSprite(taraTexture, 3.5);
 
     // --- CINEMATIC 45-SECOND CAMERA PATH ---
-    // Start above Gate 4 looking at compound, drift toward cooling towers,
-    // then arc around to show the creek and colony, loop every 45s.
     const camSpline = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, 14, 68),     // Above Gate 4 looking across compound
       new THREE.Vector3(-15, 15, 15),   // Drifting past Server Hall toward cooling towers
       new THREE.Vector3(12, 13, -15),   // Near cooling towers looking at steam
       new THREE.Vector3(60, 15, 10),    // Creek and outfall canal view
       new THREE.Vector3(30, 18, 70),    // Colony background view looking back at compound
-    ], true); // Closed loop
+    ], true);
 
     const lookSpline = new THREE.CatmullRomCurve3([
       new THREE.Vector3(0, 4, 10),      // Looking into compound past Gate 4
@@ -472,7 +494,6 @@ export const AttractMode: React.FC = () => {
         camera.position.copy(currentCamPos);
         camera.lookAt(currentLookTarget);
       } else if (targetCamPosRef.current && targetLookAtRef.current) {
-        // Camera smoothly snaps to player position when specialist selected
         camera.position.lerp(targetCamPosRef.current, 0.05);
         currentLookTarget.lerp(targetLookAtRef.current, 0.05);
         camera.lookAt(currentLookTarget);
@@ -489,7 +510,7 @@ export const AttractMode: React.FC = () => {
       });
 
       // Specialists idle animation: gentle sway (0.3px / 2s loop)
-      const swayPeriod = (elapsed / 2) * Math.PI * 2; // 2s loop
+      const swayPeriod = (elapsed / 2) * Math.PI * 2;
       voltSprite.position.x = -3.5 + Math.sin(swayPeriod) * 0.04;
       voltSprite.position.y = 2.4 + Math.cos(swayPeriod) * 0.02;
 
@@ -512,7 +533,7 @@ export const AttractMode: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-[#1A1F2E] font-mono select-none">
+    <div className="relative w-screen h-screen overflow-hidden bg-[#18130F] font-mono select-none">
       {/* 3D WebGL Canvas: 540p scaled pixelated */}
       <canvas
         ref={canvasRef}
@@ -527,11 +548,11 @@ export const AttractMode: React.FC = () => {
       <div className="scanlines absolute inset-0 pointer-events-none opacity-25" />
       <div className="film-grain" />
 
-      {/* Dark Vignette Overlay: radial gradient */}
+      {/* Dark Warm Vignette Overlay: radial gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.45) 100%)',
+          background: 'radial-gradient(circle at center, transparent 35%, rgba(18, 12, 6, 0.55) 100%)',
         }}
       />
 
@@ -540,7 +561,7 @@ export const AttractMode: React.FC = () => {
         <div className="absolute top-10 sm:top-14 left-1/2 -translate-x-1/2 flex flex-col items-center z-30 select-none pointer-events-auto">
           {/* Top Center: Game Title with slight flicker animation */}
           <h1
-            className="font-heading text-4xl sm:text-6xl md:text-7xl text-[#F0A500] tracking-wider text-center drop-shadow-[0_4px_12px_rgba(0,0,0,0.95)] animate-title-flicker"
+            className="font-heading text-4xl sm:text-6xl md:text-7xl text-[#F0A500] tracking-wider text-center drop-shadow-[0_4px_14px_rgba(0,0,0,0.95)] animate-title-flicker"
             style={{ letterSpacing: '0.08em' }}
           >
             APAS <span className="text-[#E8E0D0]">:</span> BREACH
@@ -550,7 +571,8 @@ export const AttractMode: React.FC = () => {
           <div className="mt-8 sm:mt-10 flex flex-col items-center space-y-4 sm:space-y-5">
             <button
               type="button"
-              onClick={() => setActiveOverlay('DISPATCH')}
+              onMouseEnter={() => audioManager.playHover()}
+              onClick={() => handleOpenOverlay('DISPATCH')}
               className="font-mono text-xl sm:text-2xl text-[#E8E0D0] hover:text-[#F0A500] hover:drop-shadow-[0_0_12px_rgba(240,165,0,0.9)] cursor-crosshair transition-all duration-150 tracking-wider flex items-center gap-2 group"
             >
               <span className="text-[#F0A500] group-hover:translate-x-1 transition-transform">&gt;</span>
@@ -559,7 +581,8 @@ export const AttractMode: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveOverlay('SPECIALISTS')}
+              onMouseEnter={() => audioManager.playHover()}
+              onClick={() => handleOpenOverlay('SPECIALISTS')}
               className="font-mono text-xl sm:text-2xl text-[#E8E0D0] hover:text-[#F0A500] hover:drop-shadow-[0_0_12px_rgba(240,165,0,0.9)] cursor-crosshair transition-all duration-150 tracking-wider flex items-center gap-2 group"
             >
               <span className="text-[#F0A500] group-hover:translate-x-1 transition-transform">&gt;</span>
@@ -568,7 +591,8 @@ export const AttractMode: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveOverlay('FIELD_NOTES')}
+              onMouseEnter={() => audioManager.playHover()}
+              onClick={() => handleOpenOverlay('FIELD_NOTES')}
               className="font-mono text-xl sm:text-2xl text-[#E8E0D0] hover:text-[#F0A500] hover:drop-shadow-[0_0_12px_rgba(240,165,0,0.9)] cursor-crosshair transition-all duration-150 tracking-wider flex items-center gap-2 group"
             >
               <span className="text-[#F0A500] group-hover:translate-x-1 transition-transform">&gt;</span>
@@ -577,7 +601,8 @@ export const AttractMode: React.FC = () => {
 
             <button
               type="button"
-              onClick={() => setActiveOverlay('CREDITS')}
+              onMouseEnter={() => audioManager.playHover()}
+              onClick={() => handleOpenOverlay('CREDITS')}
               className="font-mono text-xl sm:text-2xl text-[#E8E0D0] hover:text-[#F0A500] hover:drop-shadow-[0_0_12px_rgba(240,165,0,0.9)] cursor-crosshair transition-all duration-150 tracking-wider flex items-center gap-2 group"
             >
               <span className="text-[#F0A500] group-hover:translate-x-1 transition-transform">&gt;</span>
@@ -589,22 +614,28 @@ export const AttractMode: React.FC = () => {
 
       {/* In-game HUD when specialist was selected (snap camera, game starts) */}
       {selectedSpecialist && activeOverlay === 'NONE' && (
-        <div className="absolute top-8 left-8 z-30 bg-[#1A1F2E]/90 border border-[#F0A500] p-4 comic-shadow">
-          <p className="font-heading text-sm text-[#F0A500] tracking-wide mb-1">AUDIT ACTIVE &middot; GATE 4</p>
-          <p className="font-mono text-xs text-[#E8E0D0]">OPERATOR: {selectedSpecialist}</p>
-          <p className="font-mono text-[10px] text-[#8A8FA8] mt-2 mb-3">THE WORLD IS RUNNING LIVE. SHIFT IN PROGRESS.</p>
+        <div className="absolute top-8 left-8 z-30 bg-[#1C1713]/95 border-2 border-[#F0A500] p-5 shadow-[6px_6px_0px_#0A0806] tactical-corners animate-game-panel">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#CC2200] animate-ping" />
+            <p className="font-heading text-sm text-[#F0A500] tracking-wide">SHIFT 16:30 &middot; GATE 4 ACTIVE</p>
+          </div>
+          <p className="font-mono text-xs text-[#E8E0D0] tracking-wide">SPECIALIST: <strong className="text-[#F0A500]">{selectedSpecialist}</strong></p>
+          <p className="font-mono text-[10px] text-[#A89880] mt-2 mb-4 leading-relaxed">
+            FACILITY SYSTEMS LIVE &middot; 540P SIMULATION RUNNING
+          </p>
           <button
             type="button"
+            onMouseEnter={() => audioManager.playHover()}
             onClick={handleReturnToAttract}
-            className="font-mono text-[10px] text-[#F0A500] hover:text-[#E8E0D0] border border-[#3A4156] px-2.5 py-1 bg-[#252B3B] cursor-crosshair"
+            className="font-mono text-[11px] font-bold text-[#1C1713] bg-[#F0A500] hover:bg-[#FFD166] px-3.5 py-1.5 cursor-crosshair shadow-[2px_2px_0px_#0A0806] active:translate-x-0.5 active:translate-y-0.5 transition-all"
           >
-            &larr; TITLE SCREEN
+            &larr; ABORT SHIFT // TITLE SCREEN
           </button>
         </div>
       )}
 
       {/* Bottom Left: Live HHI readout in Space Mono 11px #F0A500 */}
-      <div className="absolute bottom-6 left-6 sm:left-10 z-30 font-mono text-[11px] text-[#F0A500] tracking-wider select-none flex items-center gap-2 bg-[#1A1F2E]/80 border border-[#3A4156] px-3 py-1.5 comic-shadow-sm">
+      <div className="absolute bottom-6 left-6 sm:left-10 z-30 font-mono text-[11px] text-[#F0A500] tracking-wider select-none flex items-center gap-2 bg-[#1C1713]/90 border border-[#4D3A28] px-3.5 py-1.5 shadow-[3px_3px_0px_#0A0806]">
         <span className="inline-block w-2 h-2 rounded-full bg-[#CC2200] animate-pulse" />
         <span>HHI: {hhiValue} &mdash; CRITICAL</span>
       </div>
@@ -613,13 +644,16 @@ export const AttractMode: React.FC = () => {
       <div className="absolute bottom-6 right-6 sm:right-10 z-30 select-none">
         <button
           type="button"
+          onMouseEnter={() => audioManager.playHover()}
           onClick={handleAudioToggle}
-          className="font-mono text-[11px] text-[#E8E0D0] hover:text-[#F0A500] cursor-crosshair flex items-center gap-2 tracking-wider transition-colors bg-[#1A1F2E]/80 border border-[#3A4156] px-3 py-1.5 comic-shadow-sm focus:outline-none"
+          className="font-mono text-[11px] text-[#E8E0D0] hover:text-[#F0A500] cursor-crosshair flex items-center gap-2 tracking-wider transition-colors bg-[#1C1713]/90 border border-[#4D3A28] hover:border-[#F0A500] px-3.5 py-1.5 shadow-[3px_3px_0px_#0A0806] focus:outline-none"
         >
           {!audioStarted ? (
-            <span className="text-[#F0A500] animate-pulse">CLICK TO UNMUTE</span>
+            <span className="text-[#F0A500] animate-pulse flex items-center gap-1.5">
+              <span>&bull;</span> CLICK TO UNMUTE
+            </span>
           ) : (
-            <span className="flex items-center gap-2 text-[#F0A500] hover:text-[#E8E0D0]">
+            <span className="flex items-center gap-2 text-[#F0A500] hover:text-[#FFD166]">
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
                 {isMuted ? (
                   <path d="M3.63 3.63a.996.996 0 000 1.41L7.29 8.7 7 9H4v6h3l5 5v-6.71l4.92 4.92c-.57.38-1.21.67-1.92.86v2.06c1.3-.34 2.47-.94 3.44-1.73l1.83 1.83a.996.996 0 101.41-1.41L5.05 3.63a.996.996 0 00-1.42 0zM12 4L9.91 6.09 12 8.18V4z" />
@@ -627,83 +661,118 @@ export const AttractMode: React.FC = () => {
                   <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
                 )}
               </svg>
-              <span className="text-[10px] text-[#8A8FA8]">{isMuted ? 'MUTED' : 'LIVE'}</span>
+              <span className="text-[10px] text-[#A89880]">{isMuted ? 'MUTED' : 'LIVE SYNTH'}</span>
             </span>
           )}
         </button>
       </div>
 
-      {/* --- OVERLAY PANELS (OPENED DIRECTLY OVER LIVE 3D SCENE) --- */}
+      {/* --- OVERLAY PANELS: TACTICAL COMIC-NOIR GAME DASHBOARDS --- */}
 
-      {/* 1. SPECIALISTS OVERLAY */}
+      {/* 1. SPECIALISTS OVERLAY: OPERATOR DOSSIERS */}
       {activeOverlay === 'SPECIALISTS' && (
-        <div className="absolute inset-0 z-40 bg-[#1A1F2E]/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8">
-          <div className="w-full max-w-6xl bg-[#252B3B] border-2 border-[#3A4156] comic-shadow p-6 sm:p-8 max-h-[92vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6 border-b border-[#3A4156] pb-4">
+        <div className="absolute inset-0 z-40 bg-[#120F0C]/85 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-6">
+          <div className="relative w-full max-w-6xl bg-[#1C1713] border-2 border-[#54402C] shadow-[10px_10px_0px_#0A0806] tactical-corners animate-game-panel overflow-hidden flex flex-col max-h-[92vh]">
+            <div className="crt-beam" />
+            <div className="hazard-stripe h-2 w-full" />
+
+            {/* Dashboard Header */}
+            <div className="p-4 sm:p-6 border-b border-[#4D3A28] bg-[#16120E] flex flex-wrap justify-between items-center gap-4">
               <div>
-                <h2 className="font-heading text-2xl sm:text-3xl text-[#E8E0D0]">FACILITY SPECIALISTS</h2>
-                <p className="font-mono text-xs text-[#8A8FA8] mt-1">
-                  Each specialist sees the facility differently. Each gives you a different edge — and a different blind spot.
-                </p>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2 h-2 rounded-full bg-[#F0A500] animate-pulse" />
+                  <span className="font-mono text-[10px] text-[#F0A500] uppercase tracking-[0.25em]">
+                    SEC_ARCHIVE // CLASSIFIED OPERATOR FILES
+                  </span>
+                </div>
+                <h2 className="font-heading text-xl sm:text-3xl text-[#E8E0D0] tracking-wide">
+                  FACILITY SPECIALISTS
+                </h2>
               </div>
-              <button
-                type="button"
-                onClick={() => setActiveOverlay('NONE')}
-                className="font-mono text-xs text-[#F0A500] hover:text-[#E8E0D0] border border-[#3A4156] px-4 py-2 bg-[#1A1F2E] cursor-crosshair"
-              >
-                [X] CLOSE
-              </button>
+
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:inline-block font-mono text-[11px] text-[#A89880]">
+                  FEED: GATE 4 STAGING AREA
+                </span>
+                <button
+                  type="button"
+                  onMouseEnter={() => audioManager.playHover()}
+                  onClick={handleCloseOverlay}
+                  className="font-mono text-xs font-bold text-[#F0A500] hover:text-[#1C1713] hover:bg-[#F0A500] border border-[#F0A500] px-4 py-2 bg-[#241E18] cursor-crosshair transition-all shadow-[2px_2px_0px_#0A0806]"
+                >
+                  [X] ESC CLOSE
+                </button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+            {/* Dossier Cards Grid */}
+            <div className="p-4 sm:p-6 overflow-y-auto game-scrollbar grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
               {specialistsData.map((spec) => (
                 <div
                   key={spec.id}
-                  className="w-full max-w-[340px] bg-[#1A1F2E] border border-[#3A4156] hover:border-[#F0A500] transition-colors comic-shadow flex flex-col justify-between overflow-hidden"
+                  onMouseEnter={() => audioManager.playHover()}
+                  className="w-full max-w-[340px] bg-[#241E18] border-2 border-[#4D3A28] hover:border-[#F0A500] hover:scale-[1.015] transition-all duration-200 shadow-[6px_6px_0px_#0A0806] flex flex-col justify-between overflow-hidden group cursor-crosshair"
                 >
-                  {/* Top 55%: Character Art & Backdrop */}
-                  <div className="relative w-full h-[250px] bg-[#1A1F2E] flex items-center justify-center overflow-hidden border-b border-[#3A4156]/60">
+                  {/* Top Dossier Header Bar */}
+                  <div className="px-4 py-2 border-b border-[#4D3A28] bg-[#1C1713] flex justify-between items-center text-[10px]">
+                    <span className="font-mono text-[#F0A500] font-bold">DOSSIER #{spec.id.toUpperCase()}</span>
+                    <span className="font-mono text-[#A89880]">CALLSIGN: {spec.callsign}</span>
+                  </div>
+
+                  {/* Character Art Container with warm comic-inked backdrop */}
+                  <div className="relative w-full h-[240px] bg-[#18130F] flex items-center justify-center overflow-hidden border-b border-[#4D3A28]">
                     {spec.backdrop}
                     <img
                       src={spec.image}
                       alt={spec.name}
-                      className="relative z-10 w-full h-full object-contain pointer-events-none select-none"
+                      className="relative z-10 w-full h-full object-contain pointer-events-none select-none group-hover:scale-105 transition-transform duration-300"
                     />
+                    <div className="absolute bottom-2 left-2 z-20 bg-[#16120E]/90 border border-[#4D3A28] px-2 py-0.5 text-[9px] font-mono text-[#F0A500]">
+                      STATION: GATE 4
+                    </div>
                   </div>
 
-                  {/* Bottom 45%: Details & Stat Bars */}
-                  <div className="p-5 flex-1 flex flex-col justify-between">
+                  {/* Bottom Info & Segmented Stat Meters */}
+                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between bg-[#201A14]">
                     <div>
-                      <h3 className="font-heading text-xl tracking-wide mb-1" style={{ color: spec.accent }}>
+                      <h3 className="font-heading text-lg sm:text-xl tracking-wide mb-1" style={{ color: spec.accent }}>
                         {spec.name}
                       </h3>
-                      <p className="font-mono text-[10px] text-[#8A8FA8] uppercase tracking-[0.18em] mb-3">
+                      <p className="font-mono text-[10px] text-[#A89880] uppercase tracking-[0.16em] mb-3">
                         {spec.role}
                       </p>
                       <p className="font-mono text-xs text-[#E8E0D0] leading-relaxed mb-3">
                         {spec.tool}
                       </p>
-                      <p className="font-mono text-xs text-[#8A8FA8] leading-relaxed mb-5">
-                        <span className="text-[#CC2200] font-bold">BLIND SPOT — </span>
+                      <p className="font-mono text-[11px] text-[#A89880] leading-relaxed mb-4 bg-[#18130F] p-2.5 border-l-2 border-[#CC2200]">
+                        <span className="text-[#CC2200] font-bold">BLIND SPOT &mdash; </span>
                         {spec.weakness}
                       </p>
                     </div>
 
-                    <div className="space-y-2.5 pt-3 border-t border-[#3A4156]">
+                    {/* Segmented Tactical Stat Bars */}
+                    <div className="space-y-2.5 pt-3 border-t border-[#4D3A28]">
                       {spec.stats.map((stat) => (
                         <div key={stat.label}>
-                          <div className="flex justify-between font-mono text-[10px] text-[#8A8FA8] mb-0.5">
+                          <div className="flex justify-between font-mono text-[9px] text-[#A89880] mb-1">
                             <span>{stat.label}</span>
-                            <span>{stat.value}</span>
+                            <span className="font-bold text-[#E8E0D0]">{stat.value}%</span>
                           </div>
-                          <div className="w-full h-1.5 bg-[#3A4156] overflow-hidden">
-                            <div
-                              className="h-full transition-all duration-700 ease-out"
-                              style={{
-                                backgroundColor: spec.accent,
-                                width: `${stat.value}%`,
-                              }}
-                            />
+                          {/* Segmented visual meter */}
+                          <div className="w-full h-2 bg-[#16120E] border border-[#3A2E20] p-0.5 flex gap-0.5">
+                            {Array.from({ length: 10 }).map((_, i) => {
+                              const active = i < Math.round(stat.value / 10);
+                              return (
+                                <div
+                                  key={i}
+                                  className="h-full flex-1 transition-all duration-300"
+                                  style={{
+                                    backgroundColor: active ? spec.accent : 'transparent',
+                                    opacity: active ? 0.95 : 0.15,
+                                  }}
+                                />
+                              );
+                            })}
                           </div>
                         </div>
                       ))}
@@ -716,40 +785,55 @@ export const AttractMode: React.FC = () => {
         </div>
       )}
 
-      {/* 2. FIELD NOTES OVERLAY */}
+      {/* 2. FIELD NOTES OVERLAY: INTELLIGENCE BRIEFING */}
       {activeOverlay === 'FIELD_NOTES' && (
-        <div className="absolute inset-0 z-40 bg-[#1A1F2E]/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8">
-          <div className="w-full max-w-4xl bg-[#252B3B] border-2 border-[#3A4156] comic-shadow p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6 border-b border-[#3A4156] pb-4">
+        <div className="absolute inset-0 z-40 bg-[#120F0C]/85 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-6">
+          <div className="relative w-full max-w-4xl bg-[#1C1713] border-2 border-[#54402C] shadow-[10px_10px_0px_#0A0806] tactical-corners animate-game-panel overflow-hidden flex flex-col max-h-[92vh]">
+            <div className="crt-beam" />
+            <div className="hazard-stripe h-2 w-full" />
+
+            <div className="p-4 sm:p-6 border-b border-[#4D3A28] bg-[#16120E] flex justify-between items-center">
               <div>
-                <h2 className="font-heading text-2xl sm:text-3xl text-[#E8E0D0]">FIELD NOTES</h2>
-                <p className="font-mono text-xs text-[#8A8FA8] mt-1">
-                  The facts behind the fiction. Real data. Real systems. Real consequences.
-                </p>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2 h-2 rounded-full bg-[#F0A500] animate-pulse" />
+                  <span className="font-mono text-[10px] text-[#F0A500] uppercase tracking-[0.25em]">
+                    CREEK &amp; INFRASTRUCTURE INTELLIGENCE
+                  </span>
+                </div>
+                <h2 className="font-heading text-xl sm:text-3xl text-[#E8E0D0]">FIELD NOTES // TELEMETRY</h2>
               </div>
               <button
                 type="button"
-                onClick={() => setActiveOverlay('NONE')}
-                className="font-mono text-xs text-[#F0A500] hover:text-[#E8E0D0] border border-[#3A4156] px-4 py-2 bg-[#1A1F2E] cursor-crosshair"
+                onMouseEnter={() => audioManager.playHover()}
+                onClick={handleCloseOverlay}
+                className="font-mono text-xs font-bold text-[#F0A500] hover:text-[#1C1713] hover:bg-[#F0A500] border border-[#F0A500] px-4 py-2 bg-[#241E18] cursor-crosshair transition-all shadow-[2px_2px_0px_#0A0806]"
               >
-                [X] CLOSE
+                [X] ESC CLOSE
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto game-scrollbar">
               {fieldNotesCards.map((card) => (
                 <div
                   key={card.label}
-                  className="bg-[#1A1F2E] border-l-4 border-l-[#F0A500] border-y border-r border-[#3A4156] p-5 comic-shadow"
+                  onMouseEnter={() => audioManager.playHover()}
+                  className="bg-[#241E18] border-l-4 border-l-[#F0A500] border-y border-r border-[#4D3A28] hover:border-r-[#F0A500] p-5 shadow-[4px_4px_0px_#0A0806] transition-all"
                 >
-                  <span className="font-mono text-[11px] text-[#F0A500] uppercase tracking-[0.2em] block mb-2 font-bold">
-                    {card.label}
-                  </span>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-mono text-[10px] text-[#F0A500] uppercase tracking-[0.2em] font-bold">
+                      {card.tag}
+                    </span>
+                    <span className="font-mono text-[9px] text-[#A89880] border border-[#3A2E20] px-2 py-0.5 bg-[#18130F]">
+                      {card.code}
+                    </span>
+                  </div>
+                  <h3 className="font-heading text-base text-[#E8E0D0] mb-2">{card.label}</h3>
                   <p className="font-mono text-xs text-[#E8E0D0] leading-relaxed mb-3">
                     {card.fact}
                   </p>
-                  <div className="font-mono text-[10px] text-[#8A8FA8] pt-2 border-t border-[#3A4156]/40">
-                    {card.source}
+                  <div className="font-mono text-[10px] text-[#A89880] pt-2 border-t border-[#3A2E20] flex items-center justify-between">
+                    <span>{card.source}</span>
+                    <span className="text-[#F0A500]">VERIFIED TELEMETRY</span>
                   </div>
                 </div>
               ))}
@@ -758,81 +842,117 @@ export const AttractMode: React.FC = () => {
         </div>
       )}
 
-      {/* 3. CREDITS OVERLAY */}
+      {/* 3. CREDITS OVERLAY: SYSTEM TERMINAL MANIFEST */}
       {activeOverlay === 'CREDITS' && (
-        <div className="absolute inset-0 z-40 bg-[#1A1F2E]/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 sm:p-8">
-          <div className="w-full max-w-3xl bg-[#252B3B] border-2 border-[#3A4156] comic-shadow p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6 border-b border-[#3A4156] pb-4">
-              <h2 className="font-heading text-2xl sm:text-3xl text-[#E8E0D0]">CREDITS &amp; LICENCES</h2>
+        <div className="absolute inset-0 z-40 bg-[#120F0C]/85 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-6">
+          <div className="relative w-full max-w-3xl bg-[#1C1713] border-2 border-[#54402C] shadow-[10px_10px_0px_#0A0806] tactical-corners animate-game-panel overflow-hidden flex flex-col max-h-[92vh]">
+            <div className="crt-beam" />
+            <div className="hazard-stripe h-2 w-full" />
+
+            <div className="p-4 sm:p-6 border-b border-[#4D3A28] bg-[#16120E] flex justify-between items-center">
+              <div>
+                <span className="font-mono text-[10px] text-[#F0A500] uppercase tracking-[0.25em] block mb-1">
+                  SYSTEM ARCHITECTURE // SPEC 1.0
+                </span>
+                <h2 className="font-heading text-xl sm:text-3xl text-[#E8E0D0]">CREDITS &amp; LICENCES</h2>
+              </div>
               <button
                 type="button"
-                onClick={() => setActiveOverlay('NONE')}
-                className="font-mono text-xs text-[#F0A500] hover:text-[#E8E0D0] border border-[#3A4156] px-4 py-2 bg-[#1A1F2E] cursor-crosshair"
+                onMouseEnter={() => audioManager.playHover()}
+                onClick={handleCloseOverlay}
+                className="font-mono text-xs font-bold text-[#F0A500] hover:text-[#1C1713] hover:bg-[#F0A500] border border-[#F0A500] px-4 py-2 bg-[#241E18] cursor-crosshair transition-all shadow-[2px_2px_0px_#0A0806]"
               >
-                [X] CLOSE
+                [X] ESC CLOSE
               </button>
             </div>
 
-            <div className="space-y-5 font-mono text-xs text-[#8A8FA8] leading-relaxed">
-              <div className="bg-[#1A1F2E] p-4 border border-[#3A4156]">
-                <strong className="text-[#F0A500] block mb-1">ENGINE &amp; SIMULATION</strong>
-                Three.js (WebGL retro-shaded pipeline) &middot; React &middot; TypeScript &middot; Vite
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto game-scrollbar font-mono text-xs text-[#A89880] leading-relaxed">
+              <div className="bg-[#241E18] p-4 border border-[#4D3A28] shadow-[3px_3px_0px_#0A0806]">
+                <strong className="text-[#F0A500] block mb-1 uppercase tracking-wider">3D ENGINE &amp; GAME PIPELINE</strong>
+                Three.js (540p nearest-neighbour pixelated WebGL viewport) &middot; React &middot; TypeScript &middot; Vite
               </div>
-              <div className="bg-[#1A1F2E] p-4 border border-[#3A4156]">
-                <strong className="text-[#F0A500] block mb-1">TYPOGRAPHY</strong>
+              <div className="bg-[#241E18] p-4 border border-[#4D3A28] shadow-[3px_3px_0px_#0A0806]">
+                <strong className="text-[#F0A500] block mb-1 uppercase tracking-wider">RETRO TYPOGRAPHY</strong>
                 Rubik Mono One (SIL Open Font Licence) &middot; Space Mono (SIL Open Font Licence)
               </div>
-              <div className="bg-[#1A1F2E] p-4 border border-[#3A4156]">
-                <strong className="text-[#F0A500] block mb-1">SOUND DESIGN</strong>
-                Synthesized live via Web Audio API. Zero external audio samples used.
+              <div className="bg-[#241E18] p-4 border border-[#4D3A28] shadow-[3px_3px_0px_#0A0806]">
+                <strong className="text-[#F0A500] block mb-1 uppercase tracking-wider">SOUND DESIGN ENGINE</strong>
+                100% synthesized in-browser via Web Audio API. 60Hz/120Hz harmonic hum + bandpass noise stream + interactive mechanical UI triggers.
               </div>
-              <div className="bg-[#1A1F2E] p-4 border border-[#3A4156]">
-                <strong className="text-[#F0A500] block mb-1">CHARACTER ART</strong>
-                Original hand-drawn comic character art. Zero copyrighted assets.
+              <div className="bg-[#241E18] p-4 border border-[#4D3A28] shadow-[3px_3px_0px_#0A0806]">
+                <strong className="text-[#F0A500] block mb-1 uppercase tracking-wider">CHARACTER ART &amp; GRAPHIC NOIR</strong>
+                Original hand-drawn comic character art. Zero third-party copyrighted assets.
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* 4. DISPATCH OVERLAY (NEW GAME FLOW) */}
+      {/* 4. DISPATCH OVERLAY: MISSION DEPLOYMENT HUD */}
       {activeOverlay === 'DISPATCH' && (
-        <div className="absolute inset-0 z-40 bg-[#1A1F2E]/90 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8">
-          <div className="w-full max-w-4xl bg-[#252B3B] border-2 border-[#F0A500] comic-shadow p-6 sm:p-8 text-center">
-            <h2 className="font-heading text-2xl sm:text-4xl text-[#F0A500] mb-2 tracking-wide">
-              DISPATCH &middot; SELECT SPECIALIST
-            </h2>
-            <p className="font-mono text-xs text-[#8A8FA8] tracking-widest uppercase mb-8">
-              CHOOSE YOUR AUDITOR FOR SHIFT 16:30 &rarr; SUNRISE
-            </p>
+        <div className="absolute inset-0 z-40 bg-[#120F0C]/90 backdrop-blur-md flex flex-col items-center justify-center p-3 sm:p-6">
+          <div className="relative w-full max-w-5xl bg-[#1C1713] border-2 border-[#F0A500] shadow-[12px_12px_0px_#0A0806] tactical-corners animate-game-panel overflow-hidden flex flex-col max-h-[92vh]">
+            <div className="crt-beam" />
+            <div className="hazard-stripe h-2.5 w-full" />
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-left">
+            <div className="p-4 sm:p-6 border-b border-[#4D3A28] bg-[#16120E] text-center">
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#CC2200] animate-ping" />
+                <span className="font-mono text-xs text-[#F0A500] font-bold tracking-[0.25em] uppercase">
+                  SCADA ALERT // SHIFT 16:30 &rarr; SUNRISE
+                </span>
+              </div>
+              <h2 className="font-heading text-2xl sm:text-4xl text-[#F0A500] tracking-wide mb-1">
+                DISPATCH // SELECT AUDITOR
+              </h2>
+              <p className="font-mono text-xs text-[#A89880] tracking-widest uppercase">
+                TARGET: GATE 4 STAGING &middot; LIVE COMPOUND AUDIT
+              </p>
+            </div>
+
+            <div className="p-4 sm:p-6 overflow-y-auto game-scrollbar grid grid-cols-1 md:grid-cols-3 gap-6">
               {specialistsData.map((spec) => (
-                <button
+                <div
                   key={spec.id}
-                  type="button"
-                  onClick={() => handleSelectSpecialist(spec)}
-                  className="bg-[#1A1F2E] border-2 border-[#3A4156] hover:border-[#F0A500] p-5 text-left transition-all comic-shadow cursor-crosshair group"
+                  onMouseEnter={() => audioManager.playHover()}
+                  className="bg-[#241E18] border-2 border-[#4D3A28] hover:border-[#F0A500] p-5 shadow-[6px_6px_0px_#0A0806] flex flex-col justify-between group hover:scale-[1.015] transition-all"
                 >
-                  <h4 className="font-heading text-base sm:text-lg mb-1 group-hover:text-[#F0A500]" style={{ color: spec.accent }}>
-                    {spec.name}
-                  </h4>
-                  <p className="font-mono text-[10px] text-[#8A8FA8] uppercase mb-2">{spec.role}</p>
-                  <p className="font-mono text-xs text-[#E8E0D0] leading-relaxed">{spec.tool}</p>
-                  <div className="mt-4 pt-2 border-t border-[#3A4156] flex justify-between items-center">
-                    <span className="font-mono text-[10px] text-[#F0A500] uppercase font-bold">DISPATCH &rarr;</span>
+                  <div>
+                    <div className="w-full h-36 bg-[#18130F] mb-3 border border-[#4D3A28] flex items-center justify-center overflow-hidden relative">
+                      <img src={spec.image} alt={spec.name} className="h-full object-contain pointer-events-none group-hover:scale-110 transition-transform duration-300" />
+                      <div className="absolute top-2 right-2 font-mono text-[9px] bg-[#16120E] border border-[#F0A500] text-[#F0A500] px-1.5 py-0.5">
+                        LVL 1
+                      </div>
+                    </div>
+                    <h4 className="font-heading text-lg text-[#E8E0D0] group-hover:text-[#F0A500] transition-colors mb-1">
+                      {spec.name}
+                    </h4>
+                    <p className="font-mono text-[10px] text-[#A89880] uppercase tracking-wider mb-2">{spec.role}</p>
+                    <p className="font-mono text-xs text-[#E8E0D0] leading-relaxed mb-4">{spec.tool}</p>
                   </div>
-                </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleSelectSpecialist(spec)}
+                    className="w-full font-mono text-xs font-bold py-2.5 px-4 text-[#1C1713] bg-[#F0A500] hover:bg-[#FFD166] active:translate-x-0.5 active:translate-y-0.5 transition-all shadow-[2px_2px_0px_#0A0806] cursor-crosshair flex items-center justify-center gap-2"
+                  >
+                    <span>DEPLOY SPECIALIST</span>
+                    <span>&rarr;</span>
+                  </button>
+                </div>
               ))}
             </div>
 
-            <button
-              type="button"
-              onClick={() => setActiveOverlay('NONE')}
-              className="font-mono text-xs text-[#8A8FA8] hover:text-[#E8E0D0] border border-[#3A4156] px-6 py-2.5 bg-[#1A1F2E] cursor-crosshair"
-            >
-              &larr; BACK TO MENU
-            </button>
+            <div className="p-4 bg-[#16120E] border-t border-[#4D3A28] flex justify-center">
+              <button
+                type="button"
+                onMouseEnter={() => audioManager.playHover()}
+                onClick={handleCloseOverlay}
+                className="font-mono text-xs text-[#A89880] hover:text-[#E8E0D0] border border-[#4D3A28] px-6 py-2 bg-[#201A14] cursor-crosshair shadow-[2px_2px_0px_#0A0806]"
+              >
+                &larr; ABORT DISPATCH // BACK TO MENU
+              </button>
+            </div>
           </div>
         </div>
       )}

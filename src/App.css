@@ -102,3 +102,113 @@
 .animate-title-flicker {
   animation: titleFlicker 5s infinite ease-in-out;
 }
+
+/* Tactical Game Dashboard Animations & Shaders */
+@keyframes gamePanelSnapIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(16px);
+    filter: brightness(2) contrast(1.3);
+  }
+  50% {
+    filter: brightness(1.3);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: brightness(1) contrast(1);
+  }
+}
+
+.animate-game-panel {
+  animation: gamePanelSnapIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* CRT Scan Beam Sweep */
+@keyframes crtScanBeam {
+  0% {
+    top: -12%;
+  }
+  100% {
+    top: 112%;
+  }
+}
+
+.crt-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: linear-gradient(to bottom, transparent, rgba(240, 165, 0, 0.16), transparent);
+  pointer-events: none;
+  animation: crtScanBeam 3.5s linear infinite;
+}
+
+/* Diagonal Hazard Warning Stripes */
+.hazard-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    #F0A500,
+    #F0A500 12px,
+    #1E1812 12px,
+    #1E1812 24px
+  );
+}
+
+.hazard-stripe-sm {
+  background: repeating-linear-gradient(
+    -45deg,
+    #F0A500,
+    #F0A500 6px,
+    #1E1812 6px,
+    #1E1812 12px
+  );
+}
+
+/* Custom In-Game Retro Scrollbar */
+.game-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.game-scrollbar::-webkit-scrollbar-track {
+  background: #15110E;
+  border-left: 1px solid #3A2E20;
+}
+
+.game-scrollbar::-webkit-scrollbar-thumb {
+  background: #73532C;
+  border: 1px solid #C17F24;
+}
+
+.game-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #F0A500;
+}
+
+/* Corner Bracket Accents */
+.tactical-corners {
+  position: relative;
+}
+
+.tactical-corners::before,
+.tactical-corners::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+}
+
+.tactical-corners::before {
+  top: -2px;
+  left: -2px;
+  border-top: 2px solid #F0A500;
+  border-left: 2px solid #F0A500;
+}
+
+.tactical-corners::after {
+  bottom: -2px;
+  right: -2px;
+  border-bottom: 2px solid #F0A500;
+  border-right: 2px solid #F0A500;
+}
