@@ -17,6 +17,20 @@ func _ready() -> void:
 	deploy_button.pressed.connect(_on_deploy_pressed)
 	select_card("VOLT")
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		match event.physical_keycode:
+			KEY_LEFT, KEY_A:
+				var idx = specialists.find(selected_specialist)
+				idx = (idx - 1 + specialists.size()) % specialists.size()
+				select_card(specialists[idx])
+			KEY_RIGHT, KEY_D:
+				var idx = specialists.find(selected_specialist)
+				idx = (idx + 1) % specialists.size()
+				select_card(specialists[idx])
+			KEY_ENTER, KEY_SPACE:
+				_on_deploy_pressed()
+
 func _process(delta: float) -> void:
 	# Rotate 3D models 360 deg every 12 seconds
 	var rot_speed = TAU / 12.0
@@ -286,7 +300,7 @@ func select_card(key: String) -> void:
 			card.position.y = 0.0
 			
 	var spec_name = GameState.SPECIALISTS[key]["name"]
-	deploy_button.text = "DEPLOY — " + spec_name
+	deploy_button.text = "▶ DEPLOY — " + spec_name
 
 func _on_deploy_pressed() -> void:
 	if AudioEngine: AudioEngine.play_sfx("level_complete")

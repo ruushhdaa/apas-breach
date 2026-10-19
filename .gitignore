@@ -27,3 +27,6 @@ dist
 dist-ssr
 *.local
 build/
+Godot_v4*
+*.docx
+node_3d.tscn

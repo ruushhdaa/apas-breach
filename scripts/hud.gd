@@ -43,7 +43,19 @@ extends CanvasLayer
 @onready var beat_toast: PanelContainer = $BeatToast
 @onready var toast_label: Label = $BeatToast/Margin/ToastLabel
 
+@onready var damage_flash: ColorRect = $FlashLayer/DamageFlash
+@onready var evidence_flash: ColorRect = $FlashLayer/EvidenceFlash
+@onready var transition_flash: ColorRect = $FlashLayer/TransitionFlash
+
+var shake_intensity: float = 0.0
+var shake_duration: float = 0.0
+var shake_timer: float = 0.0
+
 var toast_timer: float = 0.0
+
+var context_hint_panel: PanelContainer
+var context_hint_label: Label
+var context_hint_timer: float = 0.0
 
 # Typewriter state
 var full_dialogue_text: String = ""
@@ -87,7 +99,35 @@ func show_beat_toast(action_text: String) -> void:
 		toast_label.text = prefix + action_text.to_upper()
 		beat_toast.visible = true
 		beat_toast.modulate.a = 1.0
+		var target_y = 96.0
+		beat_toast.position.y = 40.0
+		var tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tween.tween_property(beat_toast, "position:y", target_y, 0.3)
 		toast_timer = 2.5
+		if AudioEngine: AudioEngine.play_sfx("beat_complete")
+
+func shake(intensity: float, duration: float) -> void:
+	shake_intensity = max(shake_intensity, intensity)
+	shake_duration = duration
+	shake_timer = duration
+
+func trigger_flash(type: String) -> void:
+	match type:
+		"damage", "error":
+			if damage_flash:
+				damage_flash.color.a = 0.25
+				var tw = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				tw.tween_property(damage_flash, "color:a", 0.0, 0.3)
+		"evidence":
+			if evidence_flash:
+				evidence_flash.color.a = 0.15
+				var tw = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				tw.tween_property(evidence_flash, "color:a", 0.0, 0.4)
+		"transition":
+			if transition_flash:
+				var tw = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+				tw.tween_property(transition_flash, "color:a", 0.6, 0.1)
+				tw.tween_property(transition_flash, "color:a", 0.0, 0.8)
 
 func _ready() -> void:
 	if fullscreen_map_layer:
@@ -96,11 +136,59 @@ func _ready() -> void:
 	setup_evidence_icons()
 	setup_signals()
 	setup_custom_crosshair()
+	setup_context_hint_ui()
+
+func setup_context_hint_ui() -> void:
+	context_hint_panel = PanelContainer.new()
+	context_hint_panel.name = "ContextHintPanel"
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.04, 0.06, 0.1, 0.9)
+	sb.border_color = Color("#F0A500")
+	sb.border_width_left = 1
+	sb.border_width_top = 1
+	sb.border_width_right = 1
+	sb.border_width_bottom = 1
+	sb.corner_radius_top_left = 4
+	sb.corner_radius_top_right = 4
+	sb.corner_radius_bottom_right = 4
+	sb.corner_radius_bottom_left = 4
+	sb.content_margin_left = 16
+	sb.content_margin_right = 16
+	sb.content_margin_top = 8
+	sb.content_margin_bottom = 8
+	context_hint_panel.add_theme_stylebox_override("panel", sb)
+	
+	context_hint_label = Label.new()
+	context_hint_label.theme_override_colors.font_color = Color(0.95, 0.95, 0.95, 1.0)
+	context_hint_label.theme_override_font_sizes.font_size = 14
+	context_hint_panel.add_child(context_hint_label)
+	
+	context_hint_panel.anchors_preset = Control.PRESET_CENTER_BOTTOM
+	context_hint_panel.offset_left = -120.0
+	context_hint_panel.offset_top = -65.0
+	context_hint_panel.offset_right = 120.0
+	context_hint_panel.offset_bottom = -30.0
+	context_hint_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	context_hint_panel.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	context_hint_panel.visible = false
+	add_child(context_hint_panel)
+	
+	if GameState:
+		GameState.context_hint_requested.connect(show_context_hint)
+
+func show_context_hint(text: String, duration: float = 3.0) -> void:
+	if context_hint_label and context_hint_panel:
+		context_hint_label.text = text
+		context_hint_panel.visible = true
+		context_hint_panel.modulate.a = 1.0
+		context_hint_timer = duration
 
 func setup_signals() -> void:
 	if GameState:
 		GameState.dialogue_triggered.connect(on_dialogue_triggered)
 		GameState.state_updated.connect(update_hud_display)
+		GameState.screen_shake_requested.connect(shake)
+		GameState.screen_flash_requested.connect(trigger_flash)
 	if HHI:
 		HHI.hhi_changed.connect(on_hhi_changed)
 
@@ -153,12 +241,42 @@ func _process(delta: float) -> void:
 	update_hud_display()
 	update_film_grain_seed()
 	
+	# Physical screen shake
+	if shake_timer > 0.0:
+		shake_timer -= delta
+		var decay = clamp(shake_timer / shake_duration, 0.0, 1.0)
+		var offset = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * shake_intensity * decay
+		offset_left = offset.x
+		offset_top = offset.y
+		offset_right = offset.x
+		offset_bottom = offset.y
+		var cam = get_viewport().get_camera_3d()
+		if cam:
+			cam.h_offset = offset.x * 0.02
+			cam.v_offset = offset.y * 0.02
+	else:
+		offset_left = 0.0
+		offset_top = 0.0
+		offset_right = 0.0
+		offset_bottom = 0.0
+		var cam = get_viewport().get_camera_3d()
+		if cam:
+			cam.h_offset = 0.0
+			cam.v_offset = 0.0
+	
 	if toast_timer > 0.0 and beat_toast:
 		toast_timer -= delta
 		if toast_timer <= 0.8:
 			beat_toast.modulate.a = clamp(toast_timer / 0.8, 0.0, 1.0)
 		if toast_timer <= 0.0:
 			beat_toast.visible = false
+
+	if context_hint_timer > 0.0 and context_hint_panel:
+		context_hint_timer -= delta
+		if context_hint_timer <= 0.8:
+			context_hint_panel.modulate.a = clamp(context_hint_timer / 0.8, 0.0, 1.0)
+		if context_hint_timer <= 0.0:
+			context_hint_panel.visible = false
 
 func update_typewriter(delta: float) -> void:
 	if radio_panel.visible:

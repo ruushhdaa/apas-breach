@@ -41,6 +41,7 @@ func _init() -> void:
 		"res://scenes/ending_layer.tscn",
 		"res://scenes/game_over_layer.tscn",
 		"res://scenes/pause_menu.tscn",
+		"res://scenes/controls_screen.tscn",
 		"res://scenes/credits.tscn"
 	]
 	

@@ -313,14 +313,20 @@ func play_sfx(sfx_name: String) -> void:
 	match sfx_name:
 		"decision_open": sfx_obj["duration"] = 0.24 # 880->660->440Hz, 80ms each
 		"option_hover": sfx_obj["duration"] = 0.02  # 1200Hz, 20ms click
-		"option_select": sfx_obj["duration"] = 0.45 # 440->660->880Hz, 150ms each
-		"wrong_valve": sfx_obj["duration"] = 0.40   # 200->80Hz, 400ms error
-		"level_complete": sfx_obj["duration"] = 0.45# major triad arpeggio
-		"game_over": sfx_obj["duration"] = 0.80     # descending tone
+		"option_select": sfx_obj["duration"] = 0.20 # 660->880Hz sweep 200ms
+		"confirm_decision": sfx_obj["duration"] = 0.30 # major chord hit C5 E5 G5 simultaneous 300ms
+		"wrong_valve": sfx_obj["duration"] = 0.40   # 200->80Hz, 400ms slight distortion
+		"correct_valve": sfx_obj["duration"] = 0.45 # 440->660->880Hz 150ms each in sequence
+		"level_complete": sfx_obj["duration"] = 0.45# C5 E5 G5 arpeggio 150ms per note
+		"game_over": sfx_obj["duration"] = 0.80     # C3 descending to G2 800ms
 		"evidence_collect":
-			sfx_obj["duration"] = 0.30 # 300->600Hz chirp
-			duck_bgm(0.4, 0.5)         # volume duck BGM to 0.4 for 0.5s then restore
-		"interact_prompt": sfx_obj["duration"] = 0.03
+			sfx_obj["duration"] = 0.30 # 300->600Hz chirp 300ms
+			duck_bgm(0.4, 0.5)         # volume duck BGM
+		"beat_complete": sfx_obj["duration"] = 0.15 # 300->600Hz chirp shorter 150ms
+		"interact_prompt": sfx_obj["duration"] = 0.03 # 1000Hz subtle click 30ms
+		"ui_back": sfx_obj["duration"] = 0.15       # 440->330Hz sweep 150ms
+		"menu_confirm": sfx_obj["duration"] = 0.20  # 660->880Hz 200ms
+		"screen_transition": sfx_obj["duration"] = 0.10 # white noise burst 100ms
 		"dog_bark": sfx_obj["duration"] = 0.080     # 440Hz drop 300->180Hz 80ms
 		_: sfx_obj["duration"] = 0.1
 		
@@ -386,18 +392,28 @@ func generate_sfx_samples(delta: float) -> void:
 					s = sin(TAU * 1200.0 * t) * 0.25
 					
 				"option_select":
-					# Satisfying 440 -> 660 -> 880Hz, 150ms each
-					var freq = 440.0
-					if t > 0.30: freq = 880.0
-					elif t > 0.15: freq = 660.0
-					var sub_t = fmod(t, 0.15)
-					s = sin(TAU * freq * t) * (1.0 - (sub_t / 0.15)) * 0.4
+					# 660 -> 880Hz sweep 200ms
+					var sweep_f = lerp(660.0, 880.0, t / dur)
+					s = sin(TAU * sweep_f * t) * (1.0 - (t / dur)) * 0.4
+					
+				"confirm_decision":
+					# Major chord hit C5 E5 G5 simultaneous 300ms
+					var env = 1.0 - (t / dur)
+					s = (sin(TAU * 523.25 * t) + sin(TAU * 659.25 * t) + sin(TAU * 783.99 * t)) * 0.15 * env
 					
 				"wrong_valve":
 					# Jarring 200 -> 80Hz 400ms error tone
 					var sweep_f = lerp(200.0, 80.0, t / dur)
 					var raw = sin(TAU * sweep_f * t) * 2.2
 					s = clamp(raw, -0.45, 0.45) * (1.0 - (t / dur))
+					
+				"correct_valve":
+					# 440 -> 660 -> 880Hz, 150ms each
+					var freq = 440.0
+					if t > 0.30: freq = 880.0
+					elif t > 0.15: freq = 660.0
+					var sub_t = fmod(t, 0.15)
+					s = sin(TAU * freq * t) * (1.0 - (sub_t / 0.15)) * 0.4
 					
 				"level_complete":
 					var freq = 523.25 # C5
@@ -407,7 +423,8 @@ func generate_sfx_samples(delta: float) -> void:
 					s = sin(TAU * freq * t) * (1.0 - (sub_t / 0.15)) * 0.4
 					
 				"game_over":
-					var sweep_f = lerp(130.8, 80.0, t / dur)
+					# C3 (130.8) descending to G2 (98.0) 800ms
+					var sweep_f = lerp(130.8, 98.0, t / dur)
 					s = sin(TAU * sweep_f * t) * (1.0 - (t / dur)) * 0.5
 					
 				"evidence_collect":
@@ -415,8 +432,27 @@ func generate_sfx_samples(delta: float) -> void:
 					var sweep_f = lerp(300.0, 600.0, t / dur)
 					s = sin(TAU * sweep_f * t) * (1.0 - (t / dur)) * 0.4
 					
+				"beat_complete":
+					# Shorter 300 -> 600Hz chirp 150ms
+					var sweep_f = lerp(300.0, 600.0, t / dur)
+					s = sin(TAU * sweep_f * t) * (1.0 - (t / dur)) * 0.4
+					
 				"interact_prompt":
 					s = sin(TAU * 1000.0 * t) * (1.0 - (t / dur)) * 0.2
+					
+				"ui_back":
+					# 440 -> 330Hz sweep 150ms
+					var sweep_f = lerp(440.0, 330.0, t / dur)
+					s = sin(TAU * sweep_f * t) * (1.0 - (t / dur)) * 0.35
+					
+				"menu_confirm":
+					# 660 -> 880Hz 200ms sweep
+					var sweep_f = lerp(660.0, 880.0, t / dur)
+					s = sin(TAU * sweep_f * t) * (1.0 - (t / dur)) * 0.4
+					
+				"screen_transition":
+					# White noise burst 100ms fading
+					s = (randf() * 2.0 - 1.0) * (1.0 - (t / dur)) * 0.25
 					
 			total_sample += s
 			if t >= dur:

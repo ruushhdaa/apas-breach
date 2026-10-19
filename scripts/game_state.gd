@@ -7,6 +7,24 @@ signal evidence_added(count: int, title: String)
 signal game_over_triggered(reason: String, subtext: String)
 signal level_completed(level: int)
 signal world_transition_started(duration: float)
+signal context_hint_requested(text: String, duration: float)
+
+signal screen_shake_requested(intensity: float, duration: float)
+signal screen_flash_requested(flash_type: String)
+signal particle_requested(particle_type: String, world_pos: Vector3)
+
+func request_screen_shake(intensity: float, duration: float) -> void:
+	emit_signal("screen_shake_requested", intensity, duration)
+
+func request_screen_flash(flash_type: String) -> void:
+	emit_signal("screen_flash_requested", flash_type)
+
+func request_particle(particle_type: String, world_pos: Vector3 = Vector3.ZERO) -> void:
+	emit_signal("particle_requested", particle_type, world_pos)
+
+# Onboarding & Controls state
+var controls_seen: bool = false
+var shown_hints: Dictionary = {}
 
 # Persistent State Variables
 var sla: float = 100.0
@@ -18,6 +36,10 @@ var evidence: int = 0:
 		budget = clampi(100 + (evidence * 5), 100, 130)
 		if evidence > prev:
 			emit_signal("evidence_added", evidence, "Evidence Documented")
+			request_screen_shake(2.0, 0.15)
+			request_screen_flash("evidence")
+			request_particle("evidence_collect", Vector3.ZERO)
+			if AudioEngine: AudioEngine.play_sfx("evidence_collect")
 		emit_signal("state_updated")
 var budget: int = 100
 var pressure: float = 0.0:
@@ -155,6 +177,8 @@ func _process(delta: float) -> void:
 		scramble_timer -= delta
 		if scramble_timer <= 0.0:
 			scramble_active = false
+			request_screen_shake(15.0, 1.0)
+			request_screen_flash("damage")
 			trigger_game_over("TOWER STARVATION", "COOLING SYSTEM COLLAPSE — SILICON OVERHEATED")
 			
 	# Sump Timer (Level 3 option C)
@@ -162,6 +186,8 @@ func _process(delta: float) -> void:
 		sump_timer -= delta
 		if sump_timer <= 0.0:
 			sump_active = false
+			request_screen_shake(12.0, 0.8)
+			request_screen_flash("damage")
 			trigger_game_over("SUMP OVERFLOW", "EFFLUENT RETENTION CAPACITY BREACHED")
 			
 	# Heat clock (Level 2)
@@ -185,6 +211,9 @@ func trigger_game_over(reason: String, subtext: String) -> void:
 	if is_game_over:
 		return
 	is_game_over = true
+	request_screen_shake(12.0, 0.8)
+	request_screen_flash("damage")
+	if AudioEngine: AudioEngine.play_sfx("game_over")
 	emit_signal("game_over_triggered", reason, subtext)
 
 func add_evidence_item(id: String, title: String) -> void:
@@ -248,3 +277,10 @@ func load_game() -> bool:
 		emit_signal("state_updated")
 		return true
 	return false
+
+func trigger_context_hint(hint_id: String, text: String, duration: float = 3.0) -> void:
+	if shown_hints.has(hint_id):
+		return
+	shown_hints[hint_id] = true
+	emit_signal("context_hint_requested", text, duration)
+

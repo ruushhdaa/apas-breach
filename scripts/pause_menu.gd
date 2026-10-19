@@ -4,6 +4,7 @@ extends CanvasLayer
 const FieldNotesData = preload("res://scripts/field_notes_data.gd")
 
 @onready var resume_btn: Button = $CenterContainer/Panel/VBox/ResumeBtn
+@onready var controls_btn: Button = $CenterContainer/Panel/VBox/ControlsBtn
 @onready var mute_btn: Button = $CenterContainer/Panel/VBox/MuteBtn
 @onready var notes_btn: Button = $CenterContainer/Panel/VBox/NotesBtn
 @onready var quit_btn: Button = $CenterContainer/Panel/VBox/QuitBtn
@@ -12,14 +13,23 @@ const FieldNotesData = preload("res://scripts/field_notes_data.gd")
 @onready var close_notes_btn: Button = $CenterContainer/FieldNotesModal/VBox/CloseNotesBtn
 @onready var notes_vbox: VBoxContainer = $CenterContainer/FieldNotesModal/VBox/Scroll/NotesVBox
 
+var controls_screen_scene = preload("res://scenes/controls_screen.tscn")
+
 func _ready() -> void:
 	visible = false
 	notes_modal.visible = false
 	resume_btn.pressed.connect(toggle_pause)
+	if controls_btn: controls_btn.pressed.connect(_on_controls_pressed)
 	mute_btn.pressed.connect(_on_mute_pressed)
 	notes_btn.pressed.connect(_on_notes_pressed)
 	close_notes_btn.pressed.connect(_on_close_notes_pressed)
 	quit_btn.pressed.connect(_on_quit_pressed)
+
+func _on_controls_pressed() -> void:
+	if controls_screen_scene:
+		var ctrl = controls_screen_scene.instantiate()
+		ctrl.is_from_pause = true
+		add_child(ctrl)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:

@@ -14,7 +14,7 @@ const BANNED_WORDS = [
 ];
 
 const TARGET_DIRS = ['scripts', 'scenes', 'autoloads', 'shaders', 'src', 'docs'];
-const IGNORED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.uid', '.remap', '.gdc', '.scn']);
+const IGNORED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.uid', '.remap', '.gdc', '.scn', '.fbx', '.glb', '.bin', '.exe', '.pck', '.zip']);
 
 let foundErrors = 0;
 

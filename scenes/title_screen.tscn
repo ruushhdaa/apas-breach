@@ -78,14 +78,14 @@ alignment = 1
 
 [node name="ShadowAPAS" type="Label" parent="UI/TitleContainer/RedShadowBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.541176, 0.101961, 0, 0.4)
-theme_override_font_sizes/font_size = 72
+theme_override_colors/font_color = Color(0.541176, 0.101961, 0, 0.35)
+theme_override_font_sizes/font_size = 80
 text = "APAS"
 
 [node name="ShadowBreach" type="Label" parent="UI/TitleContainer/RedShadowBox"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.541176, 0.101961, 0, 0.4)
-theme_override_font_sizes/font_size = 48
+theme_override_colors/font_color = Color(0.541176, 0.101961, 0, 0.35)
+theme_override_font_sizes/font_size = 52
 text = ": BREACH"
 
 [node name="TitleBox" type="HBoxContainer" parent="UI/TitleContainer"]
@@ -104,7 +104,7 @@ theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 72
+theme_override_font_sizes/font_size = 80
 text = "APAS"
 
 [node name="TitleBreach" type="Label" parent="UI/TitleContainer/TitleBox"]
@@ -113,25 +113,42 @@ theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
 theme_override_constants/shadow_offset_x = 2
 theme_override_constants/shadow_offset_y = 2
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 52
 text = ": BREACH"
 
-[node name="CenterMenu" type="CenterContainer" parent="UI"]
-anchors_preset = 8
+[node name="SeparatorLine" type="ColorRect" parent="UI/TitleContainer"]
+layout_mode = 1
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -60.0
-offset_right = 180.0
-offset_bottom = 200.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = 8.0
+offset_right = 100.0
+offset_bottom = 10.0
 grow_horizontal = 2
+grow_vertical = 0
+color = Color(0.941176, 0.647059, 0, 1)
+
+[node name="CenterMenu" type="Control" parent="UI"]
+layout_mode = 1
+anchor_left = 0.15
+anchor_top = 0.45
+anchor_right = 0.5
+anchor_bottom = 0.88
+offset_right = 200.0
+grow_horizontal = 1
 grow_vertical = 2
 
 [node name="MenuVBox" type="VBoxContainer" parent="UI/CenterMenu"]
-layout_mode = 2
-theme_override_constants/separation = 6
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
 
 [node name="PressAnyKeyLabel" type="Label" parent="UI"]
 anchors_preset = 7

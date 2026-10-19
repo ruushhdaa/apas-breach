@@ -94,6 +94,14 @@ func _on_body_entered(body: Node3D) -> void:
 		cached_player = body
 		body.current_interactable = self
 		if AudioEngine: AudioEngine.play_sfx("interact_prompt")
+		
+		# In-game control reminders (show once per action, 3s duration)
+		if is_mash:
+			GameState.trigger_context_hint("mash_valve", "[Mash E] to force")
+		elif hold_required:
+			GameState.trigger_context_hint("console_hold", "[Hold E] to open")
+		else:
+			GameState.trigger_context_hint("interact", "[E] to interact")
 
 func _on_body_exited(body: Node3D) -> void:
 	if body is CharacterBody3D and body.is_in_group("player"):

@@ -5,7 +5,7 @@ extends Control
 @onready var camera_pivot: Node3D = $SubViewportContainer/SubViewport/World/TitleCameraPivot
 @onready var title_cam: Camera3D = $SubViewportContainer/SubViewport/World/TitleCameraPivot/Camera3D
 
-@onready var menu_container: CenterContainer = $UI/CenterMenu
+@onready var menu_container: Control = $UI/CenterMenu
 @onready var menu_vbox: VBoxContainer = $UI/CenterMenu/MenuVBox
 @onready var press_any_key_lbl: Label = $UI/PressAnyKeyLabel
 @onready var bottom_hhi_lbl: Label = $UI/BottomBar/HHI
@@ -46,10 +46,10 @@ func _process(delta: float) -> void:
 	cam_time = fmod(cam_time + delta, 45.0)
 	update_cinematic_camera(cam_time)
 	
-	# Press any key pulsing text (0.8s loop)
+	# Press any key pulsing text (1.2s loop 0.4->1.0->0.4)
 	if not has_pressed_any_key:
 		pulse_time += delta
-		var alpha = sin(pulse_time * TAU / 0.8) * 0.5 + 0.5
+		var alpha = 0.7 + 0.3 * sin(pulse_time * TAU / 1.2)
 		press_any_key_lbl.modulate = Color(1.0, 1.0, 1.0, alpha)
 
 func update_cinematic_camera(t: float) -> void:
@@ -59,31 +59,33 @@ func update_cinematic_camera(t: float) -> void:
 	var cam_pos: Vector3
 	var look_target: Vector3
 	
-	if t < 18.0:
-		# Pan from Gate 4 toward cooling towers
-		var progress = t / 18.0
-		var p0 = Vector3(0.0, 6.0, 58.0)
-		var p1 = Vector3(5.0, 12.0, -10.0)
+	if t < 15.0:
+		# Keyframe 0s->15s: position above Gate 4, looking at compound, drift toward cooling towers
+		var progress = t / 15.0
+		var p0 = Vector3(0.0, 8.0, 58.0)
+		var p1 = Vector3(5.0, 14.0, -5.0)
 		cam_pos = p0.lerp(p1, progress)
 		var l0 = Vector3(0.0, 2.0, 30.0)
 		var l1 = Vector3(14.0, 8.0, -35.0)
 		look_target = l0.lerp(l1, progress)
-	elif t < 36.0:
-		# Drift right to show creek
-		var progress = (t - 18.0) / 18.0
-		var p1 = Vector3(5.0, 12.0, -10.0)
-		var p2 = Vector3(45.0, 10.0, -12.0)
+	elif t < 30.0:
+		# Keyframe 15s->30s: arc right to show creek and colony
+		var progress = (t - 15.0) / 15.0
+		var p1 = Vector3(5.0, 14.0, -5.0)
+		var p2 = Vector3(45.0, 12.0, -10.0)
 		cam_pos = p1.lerp(p2, progress)
 		var l1 = Vector3(14.0, 8.0, -35.0)
 		var l2 = Vector3(85.0, 1.0, 0.0)
 		look_target = l1.lerp(l2, progress)
 	else:
-		# Hold overlooking creek
-		var progress = (t - 36.0) / 9.0
-		var p2 = Vector3(45.0, 10.0, -12.0)
-		var p3 = Vector3(48.0, 11.0, -8.0)
+		# Keyframe 30s->45s: pull back wide aerial shot of full facility
+		var progress = (t - 30.0) / 15.0
+		var p2 = Vector3(45.0, 12.0, -10.0)
+		var p3 = Vector3(0.0, 22.0, 75.0)
 		cam_pos = p2.lerp(p3, progress)
-		look_target = Vector3(85.0, 1.0, 0.0)
+		var l2 = Vector3(85.0, 1.0, 0.0)
+		var l3 = Vector3(10.0, 3.0, 5.0)
+		look_target = l2.lerp(l3, progress)
 		
 	title_cam.global_position = cam_pos
 	title_cam.look_at(look_target, Vector3.UP)
@@ -99,16 +101,16 @@ func setup_menu() -> void:
 		var item_name = menu_items[i]
 		var btn = Button.new()
 		btn.text = "▶ " + item_name if i == current_menu_idx else "   " + item_name
-		btn.custom_minimum_size = Vector2(300, 40)
+		btn.custom_minimum_size = Vector2(320, 44)
 		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.add_theme_font_size_override("font_size", 20)
+		btn.add_theme_font_size_override("font_size", 26)
 		btn.flat = true
 		
 		if item_name == "CONTINUE" and not can_continue:
 			btn.disabled = true
 			btn.modulate = Color(0.4, 0.4, 0.4, 0.5)
 		else:
-			btn.modulate = Color("#F0A500") if i == current_menu_idx else Color("#E8E0D0")
+			btn.modulate = Color("#F0A500") if i == current_menu_idx else Color("#C8C0B0")
 			
 		var idx = i
 		btn.pressed.connect(func(): on_menu_selected(idx))
@@ -130,14 +132,14 @@ func update_menu_visuals() -> void:
 		if i == current_menu_idx:
 			btn.text = "▶ " + item_name
 			btn.modulate = Color("#F0A500")
-			btn.position.x = 12.0 # Selected state shift right 12px
+			btn.position.x = 14.0 # Selected state slide in from left
 		else:
 			btn.text = "   " + item_name
 			btn.position.x = 0.0
 			if item_name == "CONTINUE" and not (GameState and GameState.has_save()):
 				btn.modulate = Color(0.4, 0.4, 0.4, 0.5)
 			else:
-				btn.modulate = Color("#E8E0D0")
+				btn.modulate = Color("#C8C0B0")
 
 func _input(event: InputEvent) -> void:
 	if not has_pressed_any_key:
@@ -175,7 +177,10 @@ func on_menu_selected(idx: int) -> void:
 	if AudioEngine: AudioEngine.play_sfx("option_select")
 	match menu_items[idx]:
 		"NEW GAME":
-			get_tree().change_scene_to_file("res://scenes/dispatch_screen.tscn")
+			if GameState and not GameState.controls_seen:
+				get_tree().change_scene_to_file("res://scenes/controls_screen.tscn")
+			else:
+				get_tree().change_scene_to_file("res://scenes/dispatch_screen.tscn")
 		"CONTINUE":
 			if GameState and GameState.load_game():
 				get_tree().change_scene_to_file("res://scenes/level_0.tscn")

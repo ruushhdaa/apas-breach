@@ -67,8 +67,8 @@ func start_level(level_idx: int) -> void:
 			in_tutorial = true
 			tutorial_beat = 1
 			tutorial_walk_dist = 0.0
-			tutorial_sprint_timer = 10.0
-			set_objective_beat("MOVE — WASD (PRESS SPACE TO SKIP)")
+			tutorial_sprint_timer = 12.0
+			set_objective_beat("Walk to the gate ahead")
 			if waypoint_marker:
 				waypoint_marker.set_target(Vector3(0, 0, 42.0))
 			if tutorial_overlay:
@@ -100,11 +100,11 @@ func set_level_beat(level: int, beat: int) -> void:
 		1:
 			match beat:
 				1:
-					set_objective_beat("Make your way to the tanker queue")
+					set_objective_beat("Make your way to the tanker queue [M for map]")
 					set_waypoint(Vector3(-15.0, 0.0, 80.0))
 				2:
 					show_toast("TANKER QUEUE REACHED")
-					set_objective_beat("Talk to the resident near the tankers [E]")
+					set_objective_beat("Talk to the resident waiting at the tankers [E]")
 					set_waypoint(Vector3(-12.5, 0.0, 80.0))
 				3:
 					show_toast("RESIDENT TESTIMONY DOCUMENTED")
@@ -116,33 +116,33 @@ func set_level_beat(level: int, beat: int) -> void:
 					set_waypoint(Vector3(-33.0, 0.4, 44.0))
 				5:
 					show_toast("BYPASS PIPE IDENTIFIED")
-					set_objective_beat("Access the console and make a decision")
+					set_objective_beat("Access the console and make your decision")
 					set_waypoint(Vector3(-27.0, 1.0, 40.0))
 		2:
 			match beat:
 				1:
-					set_objective_beat("Get to Server Hall A immediately")
+					set_objective_beat("Get to Server Hall A — emergency in progress")
 					set_waypoint(Vector3(-16.0, 1.0, -22.0))
 				3:
 					show_toast("SERVER HALL A REACHED")
-					set_objective_beat("Fix the pump seal — open V2, then V5, then close V1")
+					set_objective_beat("Fix the pump: open V2, then V5, then close V1")
 					set_waypoint(Vector3(-16.0, 1.2, -25.0))
 				5:
 					show_toast("PUMP VALVES CONFIGURED")
-					set_objective_beat("Tj rising — make a cooling decision now")
+					set_objective_beat("Tj critical — make a cooling decision now")
 					set_waypoint(Vector3(-20.0, 1.0, -25.0))
 		3:
 			match beat:
 				1:
-					set_objective_beat("Reach the outfall canal")
+					set_objective_beat("Get to the outfall canal — creek DO dropping")
 					set_waypoint(Vector3(50.0, 0.0, -20.0))
 				3:
 					show_toast("OUTFALL REACHED")
-					set_objective_beat("Sample the water at the canal [Q]")
+					set_objective_beat("Sample the canal water with your tool [Q]")
 					set_waypoint(Vector3(50.0, 0.0, -20.0))
 				4:
 					show_toast("WATER SAMPLES RECORDED")
-					set_objective_beat("Force the blowdown valve open [Mash E]")
+					set_objective_beat("Force the blowdown valve open [Mash E × 10]")
 					set_waypoint(Vector3(40.0, 1.0, -20.0))
 				5:
 					show_toast("BLOWDOWN VALVE FORCED OPEN")
@@ -151,20 +151,20 @@ func set_level_beat(level: int, beat: int) -> void:
 		4:
 			match beat:
 				1:
-					set_objective_beat("Use the budget window — access the SCADA hub")
+					set_objective_beat("Access the SCADA hub — budget window is open")
 					set_waypoint(Vector3(20.0, 1.0, 14.5))
 				3:
 					show_toast("SCADA ACCESS GRANTED")
-					set_objective_beat("Handle Rohan — do not accept")
+					set_objective_beat("Deal with Rohan's offer")
 					set_waypoint(Vector3(22.0, 0.0, 11.0))
 				4:
 					show_toast("ROHAN CONFRONTATION RESOLVED")
-					set_objective_beat("Choose a cooling retrofit")
+					set_objective_beat("Choose a cooling system retrofit")
 					set_waypoint(Vector3(20.0, 1.0, 14.5))
 		5:
 			match beat:
 				1:
-					set_objective_beat("Proceed to the audit stage")
+					set_objective_beat("Proceed to the audit stage at the facility entrance")
 					set_waypoint(Vector3(2.5, 1.0, 58.0))
 				3:
 					show_toast("AUDIT STAGE REACHED")
@@ -209,60 +209,60 @@ func process_tutorial(delta: float) -> void:
 			if tutorial_walk_dist >= 10.0 or player.global_position.distance_to(tutorial_start_pos) >= 10.0:
 				tutorial_beat = 2
 				initial_cam_yaw = player.camera_rot_y
-				show_toast("WALK TEST COMPLETE")
-				set_objective_beat("HOLD RIGHT CLICK + MOVE MOUSE — ROTATE CAMERA")
+				show_toast("MOVEMENT — GOOD")
+				set_objective_beat("Rotate the camera with your mouse")
 				if waypoint_marker: waypoint_marker.clear_target()
 				if tutorial_overlay: tutorial_overlay.set_beat(2)
 		2: # Camera orbit 90 deg (~1.5 rad)
 			if abs(player.camera_rot_y - initial_cam_yaw) >= 1.4:
 				tutorial_beat = 3
-				show_toast("CAMERA TEST COMPLETE")
-				set_objective_beat("APPROACH GUARD AHEAD [E] — INTERACT")
-				if waypoint_marker: waypoint_marker.set_target(Vector3(2.5, 0.0, 49.0))
-				if tutorial_overlay: tutorial_overlay.set_beat(3)
-		3: # Interact with Guard
-			var guard_pos = Vector3(2.5, 0.0, 49.0)
-			if player.global_position.distance_to(guard_pos) < 4.0 and Input.is_action_just_pressed("interact"):
-				tutorial_beat = 4
-				show_toast("GUARD INTERACTION COMPLETE")
-				set_objective_beat("SCAN SUBSTATION PIPE [Q] — USE SPECIALIST TOOL")
-				if waypoint_marker: waypoint_marker.set_target(Vector3(-33.0, 0.4, 44.0))
-				if tutorial_overlay: tutorial_overlay.set_beat(4)
-		4: # Specialist tool
-			if Input.is_action_just_pressed("tool_action"):
-				tutorial_beat = 5
-				show_toast("TOOL CALIBRATION COMPLETE")
-				set_objective_beat("SPRINT TO GATE 4 BARRIER — HOLD [SHIFT]")
-				tutorial_sprint_timer = 10.0
+				show_toast("CAMERA CONTROL")
+				set_objective_beat("Sprint to the gate — hold Shift")
+				tutorial_sprint_timer = 12.0
 				if waypoint_marker: waypoint_marker.set_target(Vector3(0.0, 1.0, 50.0))
-				if tutorial_overlay:
-					tutorial_overlay.show_tool_readout()
-					tutorial_overlay.set_beat(5)
-		5: # Sprint
+				if tutorial_overlay: tutorial_overlay.set_beat(3)
+		3: # Sprint
 			if player.is_sprinting:
-				tutorial_sprint_timer = 10.0 # forgiving timer
+				tutorial_sprint_timer = 12.0
 			else:
 				tutorial_sprint_timer -= delta
 			if tutorial_overlay:
 				tutorial_overlay.update_sprint_timer(tutorial_sprint_timer)
 				
 			if player.global_position.z <= 51.5 and player.global_position.distance_to(Vector3(0, 0, 50)) < 6.0:
+				tutorial_beat = 4
+				show_toast("SPRINT")
+				set_objective_beat("Talk to the guard [E]")
+				if waypoint_marker: waypoint_marker.set_target(Vector3(2.5, 0.0, 49.0))
+				if tutorial_overlay: tutorial_overlay.set_beat(4)
+		4: # Interact with Guard
+			var guard_pos = Vector3(2.5, 0.0, 49.0)
+			if player.global_position.distance_to(guard_pos) < 4.0 and Input.is_action_just_pressed("interact"):
+				tutorial_beat = 5
+				show_toast("INTERACT")
+				set_objective_beat("Scan the pipe with your tool [Q]")
+				if waypoint_marker: waypoint_marker.set_target(Vector3(-33.0, 0.4, 44.0))
+				if tutorial_overlay: tutorial_overlay.set_beat(5)
+		5: # Specialist tool
+			if Input.is_action_just_pressed("tool_action"):
 				tutorial_beat = 6
-				show_toast("SPRINT TEST COMPLETE")
-				set_objective_beat("INSPECT LIVE SCADA METRICS (PRESS SPACE TO CONTINUE)")
+				show_toast("SPECIALIST TOOL")
+				set_objective_beat("HUD INTERFACE OVERVIEW (PRESS SPACE TO ADVANCE)")
 				if waypoint_marker: waypoint_marker.clear_target()
-				if tutorial_overlay: tutorial_overlay.set_beat(6)
+				if tutorial_overlay:
+					tutorial_overlay.show_tool_readout()
+					tutorial_overlay.set_beat(6)
 		6: # HUD explanation tour
 			if Input.is_action_just_pressed("skip_action") or Input.is_action_just_pressed("interact"):
 				tutorial_beat = 7
-				show_toast("HUD SYSTEM ACKNOWLEDGED")
-				set_objective_beat("DECISION ENGINE DEMO (PRESS SPACE TO CONTINUE)")
+				show_toast("INTERFACE ACKNOWLEDGED")
+				set_objective_beat("DECISION ENGINE PREVIEW (PRESS SPACE TO ADVANCE)")
 				if tutorial_overlay: tutorial_overlay.set_beat(7)
 		7: # Decision preview
 			if Input.is_action_just_pressed("skip_action") or Input.is_action_just_pressed("interact"):
 				tutorial_beat = 8
 				show_toast("DECISION ENGINE VERIFIED")
-				set_objective_beat("YOU ARE READY. ENTERING THANE-RABALE FACILITY...")
+				set_objective_beat("YOU ARE READY. GOOD LUCK.")
 				if tutorial_overlay: tutorial_overlay.set_beat(8)
 
 func process_level_progression(_delta: float) -> void:

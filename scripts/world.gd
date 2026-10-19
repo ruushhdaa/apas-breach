@@ -101,6 +101,154 @@ func build_weather_systems() -> void:
 	
 	rain_particles.emitting = false
 	add_child(rain_particles)
+	
+	# Canal fumes for Level 3 outfall
+	canal_fumes = CPUParticles3D.new()
+	canal_fumes.name = "CanalFumes"
+	canal_fumes.amount = 24
+	canal_fumes.lifetime = 2.5
+	canal_fumes.position = Vector3(50.0, 0.5, -20.0)
+	canal_fumes.emission_shape = CPUParticles3D.EMISSION_SHAPE_BOX
+	canal_fumes.emission_box_extents = Vector3(5.0, 0.2, 5.0)
+	canal_fumes.direction = Vector3(0, 1, 0)
+	canal_fumes.spread = 25.0
+	canal_fumes.gravity = Vector3(0, 0.5, 0)
+	canal_fumes.initial_velocity_min = 1.0
+	canal_fumes.initial_velocity_max = 2.5
+	var fume_mesh = SphereMesh.new()
+	fume_mesh.radius = 0.6
+	fume_mesh.height = 1.2
+	var mat_fume = StandardMaterial3D.new()
+	mat_fume.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat_fume.albedo_color = Color(0.85, 0.82, 0.75, 0.25)
+	mat_fume.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	fume_mesh.material = mat_fume
+	canal_fumes.mesh = fume_mesh
+	canal_fumes.emitting = false
+	add_child(canal_fumes)
+	
+	if GameState:
+		GameState.particle_requested.connect(spawn_particle_effect)
+
+func spawn_particle_effect(particle_type: String, world_pos: Vector3 = Vector3.ZERO) -> void:
+	match particle_type:
+		"evidence_collect":
+			var p = CPUParticles3D.new()
+			p.amount = 8
+			p.lifetime = 0.6
+			p.one_shot = true
+			p.explosiveness = 1.0
+			p.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+			p.emission_sphere_radius = 0.3
+			p.direction = Vector3(0, 1, 0)
+			p.spread = 180.0
+			p.initial_velocity_min = 2.5
+			p.initial_velocity_max = 3.5
+			var mesh = SphereMesh.new()
+			mesh.radius = 0.08
+			mesh.height = 0.16
+			var mat = StandardMaterial3D.new()
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.albedo_color = Color("#F0A500")
+			mesh.material = mat
+			p.mesh = mesh
+			p.global_position = world_pos if world_pos != Vector3.ZERO else (player.global_position + Vector3(0, 1, 0) if player else Vector3.ZERO)
+			add_child(p)
+			p.emitting = true
+			get_tree().create_timer(1.0).timeout.connect(p.queue_free)
+			
+		"q_tool_scan":
+			var p = CPUParticles3D.new()
+			p.amount = 12
+			p.lifetime = 0.4
+			p.one_shot = true
+			p.explosiveness = 0.9
+			p.emission_shape = CPUParticles3D.EMISSION_SHAPE_RING
+			p.emission_ring_radius = 0.5
+			p.direction = Vector3(0, 1, 0)
+			p.initial_velocity_min = 0.8
+			p.initial_velocity_max = 1.2
+			var mesh = SphereMesh.new()
+			mesh.radius = 0.06
+			mesh.height = 0.12
+			var mat = StandardMaterial3D.new()
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.albedo_color = Color("#44AACC")
+			mesh.material = mat
+			p.mesh = mesh
+			p.global_position = world_pos if world_pos != Vector3.ZERO else (player.global_position + Vector3(0, 0.8, -1) if player else Vector3.ZERO)
+			add_child(p)
+			p.emitting = true
+			get_tree().create_timer(0.8).timeout.connect(p.queue_free)
+			
+		"wrong_valve":
+			var p = CPUParticles3D.new()
+			p.amount = 16
+			p.lifetime = 0.5
+			p.one_shot = true
+			p.explosiveness = 1.0
+			p.direction = Vector3(0, 1, 0)
+			p.spread = 60.0
+			p.initial_velocity_min = 3.0
+			p.initial_velocity_max = 5.0
+			var mesh = BoxMesh.new()
+			mesh.size = Vector3(0.05, 0.05, 0.05)
+			var mat = StandardMaterial3D.new()
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.albedo_color = Color("#CC2222")
+			mesh.material = mat
+			p.mesh = mesh
+			p.global_position = world_pos if world_pos != Vector3.ZERO else Vector3(-16.0, 1.2, -25.0)
+			add_child(p)
+			p.emitting = true
+			get_tree().create_timer(0.8).timeout.connect(p.queue_free)
+			
+		"correct_valve":
+			var p = CPUParticles3D.new()
+			p.amount = 8
+			p.lifetime = 0.3
+			p.one_shot = true
+			p.explosiveness = 1.0
+			p.emission_shape = CPUParticles3D.EMISSION_SHAPE_RING
+			p.emission_ring_radius = 0.4
+			p.direction = Vector3(0, 1, 0)
+			p.initial_velocity_min = 1.0
+			p.initial_velocity_max = 2.0
+			var mesh = SphereMesh.new()
+			mesh.radius = 0.06
+			mesh.height = 0.12
+			var mat = StandardMaterial3D.new()
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.albedo_color = Color("#22CC44")
+			mesh.material = mat
+			p.mesh = mesh
+			p.global_position = world_pos if world_pos != Vector3.ZERO else Vector3(-16.0, 1.2, -25.0)
+			add_child(p)
+			p.emitting = true
+			get_tree().create_timer(0.8).timeout.connect(p.queue_free)
+			
+		"decision_confirmed", "level_complete":
+			var p = CPUParticles3D.new()
+			p.amount = 24 if particle_type == "decision_confirmed" else 40
+			p.lifetime = 0.8 if particle_type == "decision_confirmed" else 1.2
+			p.one_shot = true
+			p.explosiveness = 0.95
+			p.direction = Vector3(0, 1, 0)
+			p.spread = 180.0
+			p.initial_velocity_min = 3.0
+			p.initial_velocity_max = 6.0
+			var mesh = SphereMesh.new()
+			mesh.radius = 0.08
+			mesh.height = 0.16
+			var mat = StandardMaterial3D.new()
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			mat.albedo_color = Color("#F0A500") if particle_type == "decision_confirmed" else Color("#FFFFFF")
+			mesh.material = mat
+			p.mesh = mesh
+			p.global_position = player.global_position + Vector3(0, 1.5, 0) if player else Vector3.ZERO
+			add_child(p)
+			p.emitting = true
+			get_tree().create_timer(1.5).timeout.connect(p.queue_free)
 
 func _process(delta: float) -> void:
 	# Server hall rack lights blinking (1s alternation red/green)
@@ -1380,13 +1528,17 @@ func handle_valve_turn(v_name: String) -> void:
 		if valve_sequence[2] == "V1":
 			# Solved!
 			valve_solved = true
+			GameState.request_particle("correct_valve", Vector3(-16.0, 1.2, -25.0))
 			GameState.trigger_dialogue("MEERA", "Valve sequence correct! Flow diverted through secondary heat exchanger.")
-			if AudioEngine: AudioEngine.play_sfx("level_complete")
+			if AudioEngine: AudioEngine.play_sfx("correct_valve")
 		else:
 			fail_valve_sequence()
 
 func fail_valve_sequence() -> void:
 	valve_sequence.clear()
+	GameState.request_screen_shake(6.0, 0.4)
+	GameState.request_screen_flash("damage")
+	GameState.request_particle("wrong_valve", Vector3(-16.0, 1.2, -25.0))
 	if AudioEngine: AudioEngine.play_sfx("wrong_valve")
 	GameState.trigger_dialogue("SYSTEM", "PRESSURE MISMATCH! Valve sequence failed. Required: Open V2, Open V5, Close V1.")
 

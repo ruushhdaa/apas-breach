@@ -44,8 +44,8 @@ func _process(delta: float) -> void:
 			
 	if cached_player:
 		var dist = global_position.distance_to(cached_player.global_position)
-		# Disappears when within 4m or further than 30m
-		if dist <= 4.0 or dist > 30.0:
+		# Disappears when within 4m or further than 40m
+		if dist <= 4.0 or dist > 40.0:
 			visible = false
 		else:
 			visible = true

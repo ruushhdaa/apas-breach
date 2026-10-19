@@ -1,0 +1,364 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/controls_screen.gd" id="1_ctrl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.0392157, 0.0588235, 0.101961, 0.98)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_key"]
+bg_color = Color(0.101961, 0.12549, 0.188235, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.941176, 0.647059, 0, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+bg_color = Color(0.101961, 0.145098, 0.25098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.941176, 0.647059, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="ControlsScreen" type="CanvasLayer"]
+layer = 40
+script = ExtResource("1_ctrl")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "CONTROLS"
+horizontal_alignment = 1
+
+[node name="Columns" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 60
+alignment = 1
+
+[node name="LeftCol" type="VBoxContainer" parent="Panel/VBox/Columns"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="RowMove" type="HBoxContainer" parent="Panel/VBox/Columns/LeftCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="HBoxKeys" type="HBoxContainer" parent="Panel/VBox/Columns/LeftCol/RowMove"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="K_W" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys/K_W"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "W"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="K_A" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys/K_A"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="K_S" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys/K_S"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "S"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="K_D" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMove/HBoxKeys/K_D"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "D"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMove"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "MOVE"
+
+[node name="RowSprint" type="HBoxContainer" parent="Panel/VBox/Columns/LeftCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowSprint"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowSprint/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SHIFT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/LeftCol/RowSprint"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "SPRINT"
+
+[node name="RowInteract" type="HBoxContainer" parent="Panel/VBox/Columns/LeftCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowInteract"]
+custom_minimum_size = Vector2(56, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowInteract/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/LeftCol/RowInteract"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "INTERACT / TALK"
+
+[node name="RowHold" type="HBoxContainer" parent="Panel/VBox/Columns/LeftCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowHold"]
+custom_minimum_size = Vector2(80, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowHold/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Hold E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/LeftCol/RowHold"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "INSPECT (hold 2 seconds)"
+
+[node name="RowMash" type="HBoxContainer" parent="Panel/VBox/Columns/LeftCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/LeftCol/RowMash"]
+custom_minimum_size = Vector2(96, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMash/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Mash E×10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/LeftCol/RowMash"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "FORCE OPEN"
+
+[node name="RightCol" type="VBoxContainer" parent="Panel/VBox/Columns"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="RowTool" type="HBoxContainer" parent="Panel/VBox/Columns/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/RightCol/RowTool"]
+custom_minimum_size = Vector2(56, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/RightCol/RowTool/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Q"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/RightCol/RowTool"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "SPECIALIST TOOL"
+
+[node name="RowHint" type="HBoxContainer" parent="Panel/VBox/Columns/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/RightCol/RowHint"]
+custom_minimum_size = Vector2(56, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/RightCol/RowHint/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "H"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/RightCol/RowHint"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "RADIO HINT / OBJECTIVE BANNER"
+
+[node name="RowMap" type="HBoxContainer" parent="Panel/VBox/Columns/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/RightCol/RowMap"]
+custom_minimum_size = Vector2(56, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/RightCol/RowMap/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "M"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/RightCol/RowMap"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "TOGGLE FULL MAP"
+
+[node name="RowEsc" type="HBoxContainer" parent="Panel/VBox/Columns/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/RightCol/RowEsc"]
+custom_minimum_size = Vector2(56, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/RightCol/RowEsc/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "ESC"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/RightCol/RowEsc"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "PAUSE MENU"
+
+[node name="RowDev" type="HBoxContainer" parent="Panel/VBox/Columns/RightCol"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Key" type="PanelContainer" parent="Panel/VBox/Columns/RightCol/RowDev"]
+custom_minimum_size = Vector2(56, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Panel/VBox/Columns/RightCol/RowDev/Key"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "F1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Action" type="Label" parent="Panel/VBox/Columns/RightCol/RowDev"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "DEV PANEL (debug)"
+
+[node name="MouseSection" type="VBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="MouseIcon" type="Label" parent="Panel/VBox/MouseSection"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "🖱"
+horizontal_alignment = 1
+
+[node name="MouseText1" type="Label" parent="Panel/VBox/MouseSection"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85098, 0.85098, 0.85098, 1)
+theme_override_font_sizes/font_size = 13
+text = "LEFT CLICK — LOCK CURSOR (camera orbit)    |    MOVE MOUSE — ROTATE CAMERA    |    SCROLL — ZOOM"
+horizontal_alignment = 1
+
+[node name="BottomBar" type="HBoxContainer" parent="Panel/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="BtnGotIt" type="Button" parent="Panel/VBox/BottomBar"]
+custom_minimum_size = Vector2(240, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "GOT IT — START GAME"
+
+[node name="LblSkip" type="Label" parent="Panel/VBox/BottomBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.541176, 0.560784, 0.658824, 1)
+theme_override_font_sizes/font_size = 13
+text = "SKIP [Space]"

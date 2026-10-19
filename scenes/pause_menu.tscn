@@ -76,6 +76,11 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
 text = "RESUME GAME"
 
+[node name="ControlsBtn" type="Button" parent="CenterContainer/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "CONTROLS"
+
 [node name="MuteBtn" type="Button" parent="CenterContainer/Panel/VBox"]
 custom_minimum_size = Vector2(0, 36)
 layout_mode = 2

@@ -45,6 +45,12 @@ func open_card(card_data: Dictionary) -> void:
 	
 	if AudioEngine: AudioEngine.play_sfx("decision_open")
 	
+	# Slide in from bottom 0.35s ease-out
+	var target_y = panel_container.position.y
+	panel_container.position.y += 140.0
+	var tween = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(panel_container, "position:y", target_y, 0.35)
+	
 	hhi_before_decision = HHI.current_hhi if HHI else 38.0
 	tier_before_decision = HHI.current_tier_name if HHI else "CRITICAL"
 	
@@ -130,11 +136,14 @@ func open_card(card_data: Dictionary) -> void:
 		# Consequence preview row with stat arrows & magnitude
 		var prev_row = HBoxContainer.new()
 		var p_text = opt.get("preview", "")
-		var prev_lbl = Label.new()
-		prev_lbl.text = "EFFECTS: " + p_text
-		prev_lbl.add_theme_font_size_override("font_size", 12)
-		prev_lbl.modulate = Color("#F0A500")
-		prev_row.add_child(prev_lbl)
+		var bb_text = p_text.replace("↑", "[color=#44CC66]↑[/color]").replace("↓", "[color=#CC4444]↓[/color]")
+		var prev_rtl = RichTextLabel.new()
+		prev_rtl.bbcode_enabled = true
+		prev_rtl.fit_content = true
+		prev_rtl.autowrap_mode = TextServer.AUTOWRAP_OFF
+		prev_rtl.text = "[color=#F0A500]EFFECTS:[/color] " + bb_text
+		prev_rtl.add_theme_font_size_override("normal_font_size", 12)
+		prev_row.add_child(prev_rtl)
 		vbox.add_child(prev_row)
 		
 		# Plain English tradeoff explanation line
@@ -276,6 +285,10 @@ func _input(event: InputEvent) -> void:
 func _on_confirm_pressed() -> void:
 	if selected_option == "":
 		return
+	if AudioEngine: AudioEngine.play_sfx("confirm_decision")
+	if GameState:
+		GameState.request_screen_shake(3.0, 0.2)
+		GameState.request_particle("decision_confirmed")
 	var card_id = current_card_data.get("id", "")
 	apply_consequences(card_id, selected_option)
 	panel_container.visible = false

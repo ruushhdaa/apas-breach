@@ -159,6 +159,10 @@ func _physics_process(delta: float) -> void:
 		else:
 			if not tool_active:
 				model_node.play_anim("idle")
+
+	# Proximity check for Q tool contextual reminder
+	if global_position.distance_to(Vector3(-33.0, 0.4, 44.0)) <= 12.0:
+		GameState.trigger_context_hint("tool_pipe", "[Q] to scan")
 				
 	# Handle Interactable Hold Logic (e.g. 2s for meter cabinet)
 	handle_interaction(delta)
@@ -220,36 +224,18 @@ func trigger_specialist_tool() -> void:
 
 func trigger_scan_flash(target_point: Vector3) -> void:
 	var flash_light = OmniLight3D.new()
-	flash_light.light_color = Color(1.0, 1.0, 1.0)
-	flash_light.light_energy = 8.0
-	flash_light.omni_range = 3.0
+	flash_light.light_color = Color("#44AACC")
+	flash_light.light_energy = 5.0
+	flash_light.omni_range = 3.5
 	flash_light.position = target_point
 	get_parent().add_child(flash_light)
 	
-	var burst = CPUParticles3D.new()
-	burst.amount = 8
-	burst.lifetime = 0.3
-	burst.one_shot = true
-	burst.explosiveness = 1.0
-	burst.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
-	burst.emission_sphere_radius = 0.3
-	burst.direction = Vector3(0, 1, 0)
-	burst.spread = 180.0
-	burst.gravity = Vector3(0, 0, 0)
-	burst.initial_velocity_min = 2.0
-	burst.initial_velocity_max = 4.0
-	burst.color = Color("#F0A500")
-	burst.position = target_point
-	get_parent().add_child(burst)
-	burst.emitting = true
+	if GameState:
+		GameState.request_particle("q_tool_scan", target_point)
 	
-	get_tree().create_timer(0.15).timeout.connect(func():
+	get_tree().create_timer(0.2).timeout.connect(func():
 		if is_instance_valid(flash_light):
 			flash_light.queue_free()
-	)
-	get_tree().create_timer(0.4).timeout.connect(func():
-		if is_instance_valid(burst):
-			burst.queue_free()
 	)
 
 func check_water_sampling() -> void:

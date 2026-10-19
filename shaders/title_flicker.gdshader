@@ -8,12 +8,8 @@ float hash(vec2 p) {
 
 void fragment() {
     vec4 col = texture(TEXTURE, UV);
-    float noise = hash(UV + vec2(floor(TIME * 15.0), 0.0));
-    // driven by sin(time * 2.3 + noise), range 0.85 to 1.0
-    float flicker = 0.85 + 0.15 * (sin(TIME * period + noise * 4.0) * 0.5 + 0.5);
-    
-    // Subtle scanlines behind logo
-    float scanline = sin(UV.y * 300.0) * 0.08;
-    
-    COLOR = vec4(col.rgb - scanline, col.a * flicker);
+    float noise = hash(UV + vec2(floor(TIME * 15.0), 0.0)) * 2.0 - 1.0;
+    // organic flicker: opacity = 0.88 + 0.12 * sin(TIME * 2.3 + noise)
+    float flicker = clamp(0.88 + 0.12 * sin(TIME * period + noise), 0.0, 1.0);
+    COLOR = vec4(col.rgb, col.a * flicker);
 }
