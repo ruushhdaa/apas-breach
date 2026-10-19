@@ -3,10 +3,15 @@ import React, { useState, useMemo } from 'react';
 interface TierData {
   tierName: string;
   tierColor: string;
-  skyGradient: string;
-  fogOpacity: number;
-  steamCount: number;
+  skyTop: string;
+  skyMid: string;
+  skyBottom: string;
+  cityColor: string;
   creekColor: string;
+  creekHighlight: string;
+  puffsCount: number;
+  puffsScale: number;
+  puffsOpacity: number;
   desc: string;
 }
 
@@ -18,50 +23,75 @@ export const WorldSection: React.FC = () => {
       return {
         tierName: 'COLLAPSE',
         tierColor: '#CC2200',
-        skyGradient: 'linear-gradient(to bottom, #0A0800, #1A1400)',
-        fogOpacity: 0.65,
-        steamCount: 30,
-        creekColor: '#0A0800',
+        skyTop: '#0A0800',
+        skyMid: '#100A00',
+        skyBottom: '#2A1500',
+        cityColor: '#1A1408',
+        creekColor: '#212121',
+        creekHighlight: '#333333',
+        puffsCount: 3,
+        puffsScale: 1.5,
+        puffsOpacity: 0.85,
         desc: 'The creek is black. The street is empty. You failed the facility and everything downstream.',
       };
     } else if (hhi <= 39) {
       return {
         tierName: 'BREACH',
         tierColor: '#F0A500',
-        skyGradient: 'linear-gradient(to bottom, #1A0A00, #3A1005)',
-        fogOpacity: 0.5,
-        steamCount: 24,
-        creekColor: '#2A1008',
+        skyTop: '#1A0A00',
+        skyMid: '#2A1000',
+        skyBottom: '#6A2000',
+        cityColor: '#3A1808',
+        creekColor: '#4E342E',
+        creekHighlight: '#6D4C41',
+        puffsCount: 3,
+        puffsScale: 1.3,
+        puffsOpacity: 0.75,
         desc: 'Alarms. Steam pressure critical. The regulator has been notified.',
       };
     } else if (hhi <= 59) {
       return {
         tierName: 'CRITICAL',
         tierColor: '#F0A500',
-        skyGradient: 'linear-gradient(to bottom, #2E2010, #4A3018)',
-        fogOpacity: 0.38,
-        steamCount: 18,
-        creekColor: '#4A3020',
+        skyTop: '#2E2010',
+        skyMid: '#3A2A10',
+        skyBottom: '#8A4A00',
+        cityColor: '#4A3418',
+        creekColor: '#795548',
+        creekHighlight: '#8D6E63',
+        puffsCount: 3,
+        puffsScale: 1.1,
+        puffsOpacity: 0.65,
         desc: 'Heat stress on the cooling loop. You have maybe two decisions left.',
       };
     } else if (hhi <= 79) {
       return {
         tierName: 'STRESSED',
         tierColor: '#E8E0D0',
-        skyGradient: 'linear-gradient(to bottom, #3D3A2A, #5A543A)',
-        fogOpacity: 0.25,
-        steamCount: 12,
-        creekColor: '#5A5A4A',
+        skyTop: '#3D3A2A',
+        skyMid: '#4A4030',
+        skyBottom: '#C17F24',
+        cityColor: '#524E38',
+        creekColor: '#546E7A',
+        creekHighlight: '#78909C',
+        puffsCount: 2,
+        puffsScale: 0.9,
+        puffsOpacity: 0.55,
         desc: 'The numbers are bad but recoverable. Every choice costs more than it should.',
       };
     } else {
       return {
         tierName: 'RESTORED',
         tierColor: '#4A7C59',
-        skyGradient: 'linear-gradient(to bottom, #2B4A7A, #F0A500)',
-        fogOpacity: 0.1,
-        steamCount: 5,
-        creekColor: '#3A6B9C',
+        skyTop: '#2B4A7A',
+        skyMid: '#3A5A8A',
+        skyBottom: '#C17F24',
+        cityColor: '#385C91',
+        creekColor: '#2196F3',
+        creekHighlight: '#64B5F6',
+        puffsCount: 1,
+        puffsScale: 0.75,
+        puffsOpacity: 0.45,
         desc: 'The creek is blue. The towers are quiet. You bought the city one more night.',
       };
     }
@@ -86,81 +116,134 @@ export const WorldSection: React.FC = () => {
           The sky. The steam. The creek. The street outside. Nothing in this facility is cosmetic.
         </p>
 
-        {/* Interactive World Scene Container */}
-        <div className="w-full h-[280px] sm:h-[400px] border-2 border-[#3A4156] relative overflow-hidden comic-shadow mb-10 transition-colors duration-700">
-          {/* Dynamic Sky Background */}
-          <div
-            className="absolute inset-0 transition-all duration-700 ease-in-out"
-            style={{ background: currentTier.skyGradient }}
-          />
-
-          {/* Dynamic Fog Overlay */}
-          <div
-            className="absolute inset-0 bg-[#3A4156] pointer-events-none transition-opacity duration-700"
-            style={{ opacity: currentTier.fogOpacity }}
-          />
-
-          {/* Steam Particles (Warm Off-white #F5F0E8) */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
-            {Array.from({ length: currentTier.steamCount }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full blur-md opacity-30 animate-pulse"
-                style={{
-                  left: `${20 + (i * 7) % 65}%`,
-                  bottom: `${30 + (i * 9) % 50}%`,
-                  width: `${20 + (i * 4) % 35}px`,
-                  height: `${20 + (i * 4) % 35}px`,
-                  backgroundColor: '#F5F0E8',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Cooling Tower Silhouettes (Inked SVG #252B3B) */}
-          <div className="absolute bottom-10 left-0 right-0 z-20 pointer-events-none flex justify-center">
-            <svg
-              viewBox="0 0 1000 240"
-              className="w-full h-auto max-h-[220px]"
-              preserveAspectRatio="xMidYMax meet"
-            >
-              {/* Skyline bar */}
-              <rect x="0" y="200" width="1000" height="40" fill="#252B3B" stroke="#3A4156" strokeWidth="2.5" />
-              {/* Tower 1 */}
-              <path
-                d="M150,200 C160,130 180,60 190,30 L270,30 C280,60 300,130 310,200 Z"
-                fill="#252B3B"
-                stroke="#3A4156"
-                strokeWidth="2.5"
-              />
-              <ellipse cx="230" cy="30" rx="40" ry="5" fill="#1A1F2E" stroke="#3A4156" strokeWidth="2" />
-              {/* Tower 2 */}
-              <path
-                d="M380,200 C390,120 415,50 425,20 L515,20 C525,50 550,120 560,200 Z"
-                fill="#252B3B"
-                stroke="#3A4156"
-                strokeWidth="3"
-              />
-              <ellipse cx="470" cy="20" rx="45" ry="6" fill="#1A1F2E" stroke="#3A4156" strokeWidth="2" />
-              {/* Tower 3 */}
-              <path
-                d="M630,200 C640,130 660,60 670,30 L750,30 C760,60 780,130 790,200 Z"
-                fill="#252B3B"
-                stroke="#3A4156"
-                strokeWidth="2.5"
-              />
-              <ellipse cx="710" cy="30" rx="40" ry="5" fill="#1A1F2E" stroke="#3A4156" strokeWidth="2" />
-            </svg>
-          </div>
-
-          {/* Creek Strip at Bottom */}
-          <div
-            className="absolute bottom-0 left-0 right-0 h-10 border-t-2 border-[#1A1F2E] z-30 transition-colors duration-700"
-            style={{ backgroundColor: currentTier.creekColor }}
+        {/* Interactive World Scene SVG (viewBox="0 0 1200 400") */}
+        <div className="w-full h-[280px] sm:h-[400px] border-2 border-[#3A4156] relative overflow-hidden comic-shadow mb-10 select-none">
+          <svg
+            viewBox="0 0 1200 400"
+            className="w-full h-full object-cover"
+            preserveAspectRatio="none"
           >
-            {/* Creek ripple line */}
-            <div className="w-full h-full opacity-20 bg-[repeating-linear-gradient(90deg,transparent,transparent_20px,rgba(240,165,0,0.4)_20px,rgba(240,165,0,0.4)_40px)]" />
-          </div>
+            {/* LAYER 1 — SKY: 3 horizontal flat color bands with semi-hard edges */}
+            <rect x="0" y="0" width="1200" height="110" fill={currentTier.skyTop} />
+            <rect x="0" y="110" width="1200" height="100" fill={currentTier.skyMid} />
+            <rect x="0" y="210" width="1200" height="130" fill={currentTier.skyBottom} />
+
+            {/* LAYER 2 — FAR CITY SILHOUETTE (y=200 to y=260) */}
+            <g fill={currentTier.cityColor}>
+              <rect x="40" y="220" width="35" height="40" />
+              <rect x="80" y="210" width="25" height="50" />
+              <rect x="110" y="230" width="45" height="30" />
+              <rect x="320" y="215" width="30" height="45" />
+              <rect x="355" y="205" width="20" height="55" />
+              <rect x="520" y="218" width="55" height="42" />
+              <rect x="580" y="210" width="40" height="50" />
+              <rect x="625" y="225" width="28" height="35" />
+              <rect x="850" y="208" width="32" height="52" />
+              <rect x="886" y="218" width="46" height="42" />
+              <rect x="1070" y="215" width="38" height="45" />
+              <rect x="1115" y="222" width="50" height="38" />
+              <line x1="0" y1="260" x2="1200" y2="260" stroke="#1A1F2E" strokeWidth="1" />
+            </g>
+
+            {/* LAYER 4 — STEAM PUFFS (Placed over tower tops with flat hard-edged ovals) */}
+            {/* Tower 1 Steam (x=180, top y=150, top center=250) */}
+            <g transform="translate(250, 150)">
+              {currentTier.puffsCount >= 1 && (
+                <ellipse cx="0" cy="-14" rx={35 * currentTier.puffsScale} ry={12 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.7 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 2 && (
+                <ellipse cx="8" cy="-36" rx={28 * currentTier.puffsScale} ry={10 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.45 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 3 && (
+                <ellipse cx="-4" cy="-56" rx={20 * currentTier.puffsScale} ry={8 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.25 * currentTier.puffsOpacity} />
+              )}
+            </g>
+
+            {/* Tower 2 Steam (x=380, top y=170, top center=440) */}
+            <g transform="translate(440, 170)">
+              {currentTier.puffsCount >= 1 && (
+                <ellipse cx="0" cy="-12" rx={30 * currentTier.puffsScale} ry={10 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.7 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 2 && (
+                <ellipse cx="-6" cy="-30" rx={24 * currentTier.puffsScale} ry={9 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.45 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 3 && (
+                <ellipse cx="6" cy="-48" rx={18 * currentTier.puffsScale} ry={7 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.25 * currentTier.puffsOpacity} />
+              )}
+            </g>
+
+            {/* Tower 3 Steam (x=700, top y=160, top center=765) */}
+            <g transform="translate(765, 160)">
+              {currentTier.puffsCount >= 1 && (
+                <ellipse cx="0" cy="-14" rx={32 * currentTier.puffsScale} ry={11 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.7 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 2 && (
+                <ellipse cx="6" cy="-34" rx={26 * currentTier.puffsScale} ry={9 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.45 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 3 && (
+                <ellipse cx="-5" cy="-52" rx={19 * currentTier.puffsScale} ry={7 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.25 * currentTier.puffsOpacity} />
+              )}
+            </g>
+
+            {/* Tower 4 Steam (x=940, top y=175, top center=995) */}
+            <g transform="translate(995, 175)">
+              {currentTier.puffsCount >= 1 && (
+                <ellipse cx="0" cy="-10" rx={28 * currentTier.puffsScale} ry={9 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.7 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 2 && (
+                <ellipse cx="-4" cy="-26" rx={22 * currentTier.puffsScale} ry={8 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.45 * currentTier.puffsOpacity} />
+              )}
+              {currentTier.puffsCount >= 3 && (
+                <ellipse cx="5" cy="-44" rx={16 * currentTier.puffsScale} ry={6 * currentTier.puffsScale} fill="#F5F0E8" opacity={0.25 * currentTier.puffsOpacity} />
+              )}
+            </g>
+
+            {/* LAYER 3 — COOLING TOWERS (Trapezoidal hyperboloid towers with highlight and shadow strips) */}
+            {/* Tower 1: x=180, y=150, width=140, height=190 (bottom y=340) */}
+            <g>
+              {/* Main Body */}
+              <polygon points="215,150 285,150 320,340 180,340" fill="#252B3B" stroke="#1A1F2E" strokeWidth="2" strokeLinejoin="round" />
+              {/* Left Highlight Strip (15% width) */}
+              <polygon points="215,150 225,150 201,340 180,340" fill="#3A4156" />
+              {/* Right Shadow Strip (10% width) */}
+              <polygon points="278,150 285,150 320,340 306,340" fill="#1A1F2E" />
+              {/* Rim */}
+              <ellipse cx="250" cy="150" rx="35" ry="5" fill="#1A1F2E" stroke="#1A1F2E" strokeWidth="2" />
+            </g>
+
+            {/* Tower 2: x=380, y=170, width=120, height=170 */}
+            <g>
+              <polygon points="410,170 470,170 500,340 380,340" fill="#252B3B" stroke="#1A1F2E" strokeWidth="2" strokeLinejoin="round" />
+              <polygon points="410,170 419,170 398,340 380,340" fill="#3A4156" />
+              <polygon points="464,170 470,170 500,340 488,340" fill="#1A1F2E" />
+              <ellipse cx="440" cy="170" rx="30" ry="4" fill="#1A1F2E" stroke="#1A1F2E" strokeWidth="2" />
+            </g>
+
+            {/* Tower 3: x=700, y=160, width=130, height=180 */}
+            <g>
+              <polygon points="732,160 798,160 830,340 700,340" fill="#252B3B" stroke="#1A1F2E" strokeWidth="2" strokeLinejoin="round" />
+              <polygon points="732,160 742,160 719,340 700,340" fill="#3A4156" />
+              <polygon points="791,160 798,160 830,340 817,340" fill="#1A1F2E" />
+              <ellipse cx="765" cy="160" rx="33" ry="5" fill="#1A1F2E" stroke="#1A1F2E" strokeWidth="2" />
+            </g>
+
+            {/* Tower 4: x=940, y=175, width=110, height=165 */}
+            <g>
+              <polygon points="967,175 1023,175 1050,340 940,340" fill="#252B3B" stroke="#1A1F2E" strokeWidth="2" strokeLinejoin="round" />
+              <polygon points="967,175 975,175 956,340 940,340" fill="#3A4156" />
+              <polygon points="1017,175 1023,175 1050,340 1039,340" fill="#1A1F2E" />
+              <ellipse cx="995" cy="175" rx="28" ry="4" fill="#1A1F2E" stroke="#1A1F2E" strokeWidth="2" />
+            </g>
+
+            {/* LAYER 5 — GROUND (Flat horizontal strip: full width, y=340 to y=370, #2A2018) */}
+            <rect x="0" y="340" width="1200" height="30" fill="#2A2018" stroke="#1A1F2E" strokeWidth="2" />
+
+            {/* LAYER 6 — CREEK (Flat horizontal strip: right third of scene x=800 to 1200, y=360 to 400) */}
+            <rect x="0" y="370" width="800" height="30" fill="#1A1F2E" stroke="#1A1F2E" strokeWidth="1" />
+            <rect x="800" y="360" width="400" height="40" fill={currentTier.creekColor} stroke="#1A1F2E" strokeWidth="2" />
+            {/* Creek Top Highlight Line */}
+            <line x1="800" y1="361" x2="1200" y2="361" stroke={currentTier.creekHighlight} strokeWidth="2" />
+          </svg>
         </div>
 
         {/* HHI Slider Controls */}
