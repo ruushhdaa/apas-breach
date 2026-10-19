@@ -20,5 +20,5 @@ npm run dev
 
 - No copyrighted assets
 - No audio samples — all sound is Web Audio API synthesised
-- No mention of EVS, course, assignment, or capstone 
+- No references to restricted academic terms
   anywhere in code or UI

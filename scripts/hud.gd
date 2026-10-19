@@ -38,6 +38,12 @@ extends CanvasLayer
 @onready var grain_rect: ColorRect = $PostProcess/FilmGrain
 @onready var vignette_rect: ColorRect = $PostProcess/Vignette
 @onready var crosshair: Control = $Crosshair
+@onready var objective_banner: PanelContainer = $ObjectiveBanner
+@onready var objective_label: Label = $ObjectiveBanner/Margin/ObjectiveLabel
+@onready var beat_toast: PanelContainer = $BeatToast
+@onready var toast_label: Label = $BeatToast/Margin/ToastLabel
+
+var toast_timer: float = 0.0
 
 # Typewriter state
 var full_dialogue_text: String = ""
@@ -54,6 +60,34 @@ var prev_trust: float = 30.0
 var prev_sla: float = 100.0
 
 var pulse_time: float = 0.0
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.physical_keycode == KEY_H:
+			toggle_objective_banner()
+		elif event.physical_keycode == KEY_M:
+			toggle_fullscreen_map()
+
+func set_objective(text: String) -> void:
+	if objective_label:
+		objective_label.text = "▶ OBJECTIVE: " + text
+	if objective_banner:
+		objective_banner.visible = true
+		var tween = create_tween().set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		objective_banner.position.y = 0.0
+		tween.tween_property(objective_banner, "position:y", 48.0, 0.35)
+
+func toggle_objective_banner() -> void:
+	if objective_banner:
+		objective_banner.visible = !objective_banner.visible
+
+func show_beat_toast(action_text: String) -> void:
+	if toast_label and beat_toast:
+		var prefix = "✓ " if not action_text.begins_with("✓") else ""
+		toast_label.text = prefix + action_text.to_upper()
+		beat_toast.visible = true
+		beat_toast.modulate.a = 1.0
+		toast_timer = 2.5
 
 func _ready() -> void:
 	if fullscreen_map_layer:
@@ -118,6 +152,13 @@ func _process(delta: float) -> void:
 	update_timers(delta)
 	update_hud_display()
 	update_film_grain_seed()
+	
+	if toast_timer > 0.0 and beat_toast:
+		toast_timer -= delta
+		if toast_timer <= 0.8:
+			beat_toast.modulate.a = clamp(toast_timer / 0.8, 0.0, 1.0)
+		if toast_timer <= 0.0:
+			beat_toast.visible = false
 
 func update_typewriter(delta: float) -> void:
 	if radio_panel.visible:
@@ -127,6 +168,8 @@ func update_typewriter(delta: float) -> void:
 				typewriter_timer = 0.0
 				typewriter_idx += 1
 				radio_text.text = full_dialogue_text.substr(0, typewriter_idx)
+				if AudioEngine:
+					AudioEngine.play_dialogue_char(radio_speaker.text)
 		else:
 			radio_fade_timer -= delta
 			if radio_fade_timer <= 1.0:

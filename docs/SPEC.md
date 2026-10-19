@@ -1,5 +1,5 @@
 APAS : BREACH — Build Specification v3
-For the Antigravity agent · EVS end-sem project · Author: Rushda · Stack: React + TypeScript + Vite + React Three Fiber + Rapier + Zustand + Web Audio API
+For the Antigravity agent · Author: Rushda · Stack: React + TypeScript + Vite + React Three Fiber + Rapier + Zustand + Web Audio API / Godot 4
 0. Instructions to the AI agent (read first)
 1.	Build in the phases of section 16. After every phase: run the game, take screenshots, check that phase's acceptance list, fix, then continue. Never write everything in one pass.
 2.	Zero external copyrighted material. All audio is synthesised with the Web Audio API. All visuals are procedural geometry, procedural canvas textures and vertex colours, or CC0 assets logged in LICENSES.md. See section 10.

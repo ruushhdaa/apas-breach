@@ -143,18 +143,19 @@ func _physics_process(delta: float) -> void:
 	# Animations and Audio footsteps
 	if model_node:
 		if move_vec.length() > 0.1:
+			var is_inside = (global_position.x >= -46.0 and global_position.x <= -14.0 and global_position.z >= -46.0 and global_position.z <= -4.0) or (global_position.x >= 14.0 and global_position.x <= 26.0 and global_position.z >= 5.0 and global_position.z <= 16.0)
 			if is_sprinting:
 				model_node.play_anim("run")
 				footstep_cooldown -= delta
 				if footstep_cooldown <= 0.0:
-					footstep_cooldown = 0.35
-					if AudioEngine: AudioEngine.play_sfx("sprint_footstep")
+					footstep_cooldown = 0.30
+					if AudioEngine: AudioEngine.play_footstep(true, is_inside)
 			else:
 				model_node.play_anim("walk")
 				footstep_cooldown -= delta
 				if footstep_cooldown <= 0.0:
-					footstep_cooldown = 0.60
-					if AudioEngine: AudioEngine.play_sfx("walk_footstep")
+					footstep_cooldown = 0.55
+					if AudioEngine: AudioEngine.play_footstep(false, is_inside)
 		else:
 			if not tool_active:
 				model_node.play_anim("idle")
@@ -191,6 +192,10 @@ func trigger_specialist_tool() -> void:
 	if model_node:
 		model_node.play_anim("tool")
 	
+	# Muzzle flash lens-flare equivalent at scan point
+	var scan_target = global_position - transform.basis.z * 1.8 + Vector3(0, 1.0, 0)
+	trigger_scan_flash(scan_target)
+	
 	var spec = GameState.selected_specialist
 	match spec:
 		"VOLT":
@@ -212,6 +217,40 @@ func trigger_specialist_tool() -> void:
 			
 	await get_tree().create_timer(1.0).timeout
 	tool_active = false
+
+func trigger_scan_flash(target_point: Vector3) -> void:
+	var flash_light = OmniLight3D.new()
+	flash_light.light_color = Color(1.0, 1.0, 1.0)
+	flash_light.light_energy = 8.0
+	flash_light.omni_range = 3.0
+	flash_light.position = target_point
+	get_parent().add_child(flash_light)
+	
+	var burst = CPUParticles3D.new()
+	burst.amount = 8
+	burst.lifetime = 0.3
+	burst.one_shot = true
+	burst.explosiveness = 1.0
+	burst.emission_shape = CPUParticles3D.EMISSION_SHAPE_SPHERE
+	burst.emission_sphere_radius = 0.3
+	burst.direction = Vector3(0, 1, 0)
+	burst.spread = 180.0
+	burst.gravity = Vector3(0, 0, 0)
+	burst.initial_velocity_min = 2.0
+	burst.initial_velocity_max = 4.0
+	burst.color = Color("#F0A500")
+	burst.position = target_point
+	get_parent().add_child(burst)
+	burst.emitting = true
+	
+	get_tree().create_timer(0.15).timeout.connect(func():
+		if is_instance_valid(flash_light):
+			flash_light.queue_free()
+	)
+	get_tree().create_timer(0.4).timeout.connect(func():
+		if is_instance_valid(burst):
+			burst.queue_free()
+	)
 
 func check_water_sampling() -> void:
 	# Detect nearby water source or outfall within 15m

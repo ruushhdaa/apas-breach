@@ -1,0 +1,513 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/tutorial_overlay.gd" id="1_tut"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_key"]
+bg_color = Color(0.04, 0.06, 0.1, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="TutorialOverlay" type="CanvasLayer"]
+layer = 30
+script = ExtResource("1_tut")
+
+[node name="Beat1_WASD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="KeysCenter" type="CenterContainer" parent="Beat1_WASD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -120.0
+offset_right = 160.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Beat1_WASD/KeysCenter"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="RowW" type="HBoxContainer" parent="Beat1_WASD/KeysCenter/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="KeyW" type="PanelContainer" parent="Beat1_WASD/KeysCenter/VBox/RowW"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Beat1_WASD/KeysCenter/VBox/RowW/KeyW"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "↑\nW"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RowASD" type="HBoxContainer" parent="Beat1_WASD/KeysCenter/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="KeyA" type="PanelContainer" parent="Beat1_WASD/KeysCenter/VBox/RowASD"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Beat1_WASD/KeysCenter/VBox/RowASD/KeyA"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "←\nA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyS" type="PanelContainer" parent="Beat1_WASD/KeysCenter/VBox/RowASD"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Beat1_WASD/KeysCenter/VBox/RowASD/KeyS"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "↓\nS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KeyD" type="PanelContainer" parent="Beat1_WASD/KeysCenter/VBox/RowASD"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_key")
+
+[node name="Lbl" type="Label" parent="Beat1_WASD/KeysCenter/VBox/RowASD/KeyD"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "→\nD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MoveLabel" type="Label" parent="Beat1_WASD/KeysCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "MOVE — WASD"
+horizontal_alignment = 1
+
+[node name="WalkProgressBar" type="ProgressBar" parent="Beat1_WASD"]
+custom_minimum_size = Vector2(300, 12)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -120.0
+offset_right = 150.0
+offset_bottom = -108.0
+grow_horizontal = 2
+grow_vertical = 0
+show_percentage = false
+
+[node name="Beat2_Camera" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CamCenter" type="CenterContainer" parent="Beat2_Camera"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Beat2_Camera/CamCenter"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MouseIcon" type="Label" parent="Beat2_Camera/CamCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "🖱"
+horizontal_alignment = 1
+
+[node name="CamLabel" type="Label" parent="Beat2_Camera/CamCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "HOLD RIGHT CLICK + MOVE — ROTATE CAMERA\nOR: LEFT CLICK TO LOCK CURSOR — THEN MOVE MOUSE"
+horizontal_alignment = 1
+
+[node name="Beat3_Interact" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Beat3_Interact"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -60.0
+offset_right = 160.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Beat3_Interact/Center"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "[E] — INTERACT"
+horizontal_alignment = 1
+
+[node name="Beat4_Tool" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Beat4_Tool"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -60.0
+offset_right = 220.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="Beat4_Tool/Center"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "[Q] — USE YOUR SPECIALIST TOOL"
+horizontal_alignment = 1
+
+[node name="ReadoutPanel" type="PanelContainer" parent="Beat4_Tool"]
+visible = false
+custom_minimum_size = Vector2(320, 80)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 80.0
+offset_right = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ReadoutLbl" type="Label" parent="Beat4_Tool/ReadoutPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+text = "SPECIALIST TELEMETRY SCAN COMPLETE\nTARGET: 1200mm Municipal Bypass Line"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Beat5_Sprint" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Beat5_Sprint"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -80.0
+offset_right = 180.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Beat5_Sprint/Center"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Label" type="Label" parent="Beat5_Sprint/Center/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "[SHIFT] — SPRINT"
+horizontal_alignment = 1
+
+[node name="SprintTimerLabel" type="Label" parent="Beat5_Sprint/Center/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "GATE CLOSING IN: 10.0s"
+horizontal_alignment = 1
+
+[node name="Beat6_HUDTour" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TopBox" type="ReferenceRect" parent="Beat6_HUDTour"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 46.0
+grow_horizontal = 2
+border_color = Color(0.941176, 0.647059, 0, 1)
+border_width = 2.0
+editor_only = false
+
+[node name="TopLbl" type="Label" parent="Beat6_HUDTour/TopBox"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = 6.0
+offset_right = 150.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "HHI: FACILITY HEALTH INDEX"
+horizontal_alignment = 1
+
+[node name="RightBox" type="ReferenceRect" parent="Beat6_HUDTour"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -105.0
+offset_bottom = 105.0
+grow_horizontal = 0
+grow_vertical = 2
+border_color = Color(0.941176, 0.647059, 0, 1)
+border_width = 2.0
+editor_only = false
+
+[node name="RightLbl" type="Label" parent="Beat6_HUDTour/RightBox"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = -12.0
+offset_right = -10.0
+offset_bottom = 12.0
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 14
+text = "LIVE SIMULATION METRICS →"
+
+[node name="MapBox" type="ReferenceRect" parent="Beat6_HUDTour"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -260.0
+offset_top = -260.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+border_color = Color(0.941176, 0.647059, 0, 1)
+border_width = 2.0
+editor_only = false
+
+[node name="MapLbl" type="Label" parent="Beat6_HUDTour/MapBox"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = -320.0
+offset_top = 100.0
+offset_right = -10.0
+offset_bottom = 124.0
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "COMPOUND MAP — PRESS M FOR FULL VIEW →"
+
+[node name="ContinuePrompt" type="Label" parent="Beat6_HUDTour"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = -97.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "PRESS [SPACE] TO CONTINUE"
+horizontal_alignment = 1
+
+[node name="Beat7_DecisionDemo" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DemoCenter" type="CenterContainer" parent="Beat7_DecisionDemo"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -120.0
+offset_right = 260.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBox" type="VBoxContainer" parent="Beat7_DecisionDemo/DemoCenter"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="Beat7_DecisionDemo/DemoCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "HERE IS WHAT A DECISION LOOKS LIKE"
+horizontal_alignment = 1
+
+[node name="OptA" type="Label" parent="Beat7_DecisionDemo/DemoCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "[A] OPTION A — AGGRESSIVE SHEDDING (W↓↓ H↓ S↓↓)"
+
+[node name="OptB" type="Label" parent="Beat7_DecisionDemo/DemoCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "▶ [B] OPTION B — BALANCED REMEDIATION (W↓ T↑↑)"
+
+[node name="OptC" type="Label" parent="Beat7_DecisionDemo/DemoCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "[C] OPTION C — REGULATORY LOGGING (T↑ Evidence+1)"
+
+[node name="Prompt" type="Label" parent="Beat7_DecisionDemo/DemoCenter/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "PRESS [SPACE] TO CONTINUE"
+horizontal_alignment = 1
+
+[node name="Beat8_Ready" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Center" type="CenterContainer" parent="Beat8_Ready"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -50.0
+offset_right = 200.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ReadyLabel" type="Label" parent="Beat8_Ready/Center"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "YOU ARE READY."
+horizontal_alignment = 1

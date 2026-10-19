@@ -8,15 +8,18 @@ const BANNED_WORDS = [
   { word: 'course' + ' ' + 'project', regex: /\bcourse\s+project\b/i },
   { word: 'assignment', regex: /\bassignment\b/i },
   { word: 'college' + ' ' + 'project', regex: /\bcollege\s+project\b/i },
-  { word: 'project' + ' ' + 'submission', regex: /\bproject\s+submission\b/i }
+  { word: 'end' + '-' + 'sem', regex: /\bend-sem\b/i },
+  { word: 'project' + ' ' + 'submission', regex: /\bproject\s+submission\b/i },
+  { word: 'semester' + ' ' + 'project', regex: /\bsemester\s+project\b/i }
 ];
 
-const TARGET_DIRS = ['src', 'dist'];
-const IGNORED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.ico', '.woff', '.woff2', '.ttf', '.eot']);
+const TARGET_DIRS = ['scripts', 'scenes', 'autoloads', 'shaders', 'src', 'docs'];
+const IGNORED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.gif', '.ico', '.woff', '.woff2', '.ttf', '.eot', '.uid', '.remap', '.gdc', '.scn']);
 
 let foundErrors = 0;
 
 function checkFile(filePath) {
+  if (filePath.endsWith('check-banned.js')) return;
   const ext = path.extname(filePath).toLowerCase();
   if (IGNORED_EXTENSIONS.has(ext)) return;
 

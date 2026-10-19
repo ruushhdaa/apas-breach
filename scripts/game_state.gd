@@ -204,3 +204,47 @@ func trigger_dialogue(speaker: String, text: String) -> void:
 
 func start_world_transition(duration: float = 6.0) -> void:
 	emit_signal("world_transition_started", duration)
+
+const SAVE_PATH = "user://savegame.json"
+
+func has_save() -> bool:
+	return FileAccess.file_exists(SAVE_PATH)
+
+func save_game() -> void:
+	var data = {
+		"level": current_level,
+		"specialist": selected_specialist,
+		"sla": sla,
+		"trust": trust,
+		"evidence": evidence,
+		"budget": budget,
+		"pressure": pressure,
+		"field_notes": field_notes_found
+	}
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(data))
+		file.close()
+
+func load_game() -> bool:
+	if not has_save():
+		return false
+	var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if not file:
+		return false
+	var content = file.get_as_text()
+	file.close()
+	var json = JSON.new()
+	if json.parse(content) == OK and json.data is Dictionary:
+		var d = json.data
+		current_level = d.get("level", 1)
+		selected_specialist = d.get("specialist", "VOLT")
+		sla = d.get("sla", 100.0)
+		trust = d.get("trust", 30.0)
+		evidence = d.get("evidence", 0)
+		budget = d.get("budget", 100)
+		pressure = d.get("pressure", 0.0)
+		field_notes_found = d.get("field_notes", [])
+		emit_signal("state_updated")
+		return true
+	return false

@@ -1,19 +1,33 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/decision_card.gd" id="1_card"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
-bg_color = Color(0.0392157, 0.0588235, 0.101961, 0.96)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card"]
+bg_color = Color(0.0392157, 0.0588235, 0.101961, 0.98)
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(0.941176, 0.647059, 0, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
-shadow_size = 8
+shadow_size = 12
+shadow_offset = Vector2(4, 4)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_debrief"]
+bg_color = Color(0.04, 0.06, 0.1, 0.98)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.266667, 0.8, 0.266667, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = 10
 shadow_offset = Vector2(4, 4)
 
 [node name="DecisionCardLayer" type="CanvasLayer"]
@@ -28,68 +42,116 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(620, 0)
+custom_minimum_size = Vector2(680, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_card")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+[node name="Margin" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/Margin"]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
-theme_override_font_sizes/font_size = 20
-text = "UNMETERED BYPASS DETECTED — 28.9 L/s"
-horizontal_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="OptionsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/VBoxContainer"]
+[node name="HeaderHBox" type="HBoxContainer" parent="CenterContainer/PanelContainer/Margin/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="ConfirmButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 44)
+[node name="SituationIcon" type="Label" parent="CenterContainer/PanelContainer/Margin/VBoxContainer/HeaderHBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "☵"
+
+[node name="SituationTitle" type="Label" parent="CenterContainer/PanelContainer/Margin/VBoxContainer/HeaderHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
 theme_override_font_sizes/font_size = 18
-text = "CONFIRM SELECTION"
+text = "UNMETERED BYPASS DETECTED — 28.9 L/s"
+
+[node name="SublineLabel" type="Label" parent="CenterContainer/PanelContainer/Margin/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "BYPASS FLOW: 28.9 L/s | MUNICIPAL SUPPLY: 14%"
+
+[node name="AmberSeparator" type="ColorRect" parent="CenterContainer/PanelContainer/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+color = Color(0.941176, 0.647059, 0, 0.8)
+
+[node name="OptionsContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/Margin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProjectionLabel" type="Label" parent="CenterContainer/PanelContainer/Margin/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "PROJECTED CHANGE: HHI: 38 → ~52 (STRAINED)"
+horizontal_alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="CenterContainer/PanelContainer/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "CONFIRM [A] — ARE YOU SURE?"
 
 [node name="DebriefPanel" type="PanelContainer" parent="CenterContainer"]
 visible = false
-custom_minimum_size = Vector2(580, 200)
+custom_minimum_size = Vector2(680, 0)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_1")
+theme_override_styles/panel = SubResource("StyleBoxFlat_debrief")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/DebriefPanel"]
+[node name="Margin" type="MarginContainer" parent="CenterContainer/DebriefPanel"]
 layout_mode = 2
-theme_override_constants/separation = 14
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
-[node name="DebriefTitle" type="Label" parent="CenterContainer/DebriefPanel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/DebriefPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="DebriefTitle" type="Label" parent="CenterContainer/DebriefPanel/Margin/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.266667, 0.8, 0.266667, 1)
+theme_override_font_sizes/font_size = 20
+text = "DECISION COMMITTED: CONSEQUENCE REPORT"
+horizontal_alignment = 1
+
+[node name="DebriefHHI" type="Label" parent="CenterContainer/DebriefPanel/Margin/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
-theme_override_font_sizes/font_size = 20
-text = "DECISION CONFIRMED"
+theme_override_font_sizes/font_size = 15
+text = "HYDRO HEALTH INDEX: 38 (CRITICAL) → 52 (STRAINED)"
 horizontal_alignment = 1
 
-[node name="DebriefBody" type="Label" parent="CenterContainer/DebriefPanel/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/DebriefPanel/Margin/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.91, 0.88, 0.82, 1)
-theme_override_font_sizes/font_size = 15
-text = "World parameters balancing..."
+
+[node name="DebriefBody" type="Label" parent="CenterContainer/DebriefPanel/Margin/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.92, 0.92, 1)
+theme_override_font_sizes/font_size = 13
+text = "CREEK HEALTH: 35% → 28% — BELOW SAFE THRESHOLD\nCOMMUNITY TRUST: 51 → 56 — RESIDENTS NOTICED"
 autowrap_mode = 2
 
-[node name="DebriefHHI" type="Label" parent="CenterContainer/DebriefPanel/VBoxContainer"]
+[node name="NextHintLabel" type="Label" parent="CenterContainer/DebriefPanel/Margin/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "LIVE HHI: 38 — CRITICAL"
+theme_override_colors/font_color = Color(0.55, 0.75, 0.95, 1)
+theme_override_font_sizes/font_size = 13
+text = "NEXT OBJECTIVE: Head to Server Hall A"
 horizontal_alignment = 1
 
-[node name="PressEPrompt" type="Label" parent="CenterContainer/DebriefPanel/VBoxContainer"]
+[node name="DebriefCloseButton" type="Button" parent="CenterContainer/DebriefPanel/Margin/VBoxContainer"]
+custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.65, 0.7, 1)
-theme_override_font_sizes/font_size = 13
-text = "Press [E] or [SPACE] to continue (auto-closes in 6s)"
-horizontal_alignment = 1
+text = "PROCEED (PRESS SPACE / ENTER)"
