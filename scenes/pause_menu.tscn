@@ -1,0 +1,123 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/pause_menu.gd" id="1_pause"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pm"]
+bg_color = Color(0.04, 0.06, 0.1, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.941176, 0.647059, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="PauseMenuLayer" type="CanvasLayer"]
+process_mode = 3
+layer = 90
+visible = false
+script = ExtResource("1_pause")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.05, 0.7)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(500, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pm")
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 22
+text = "PAUSED — APAS: BREACH"
+horizontal_alignment = 1
+
+[node name="ControlsPanel" type="PanelContainer" parent="CenterContainer/Panel/VBox"]
+layout_mode = 2
+
+[node name="ControlsText" type="Label" parent="CenterContainer/Panel/VBox/ControlsPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.85, 0.88, 0.92, 1)
+theme_override_font_sizes/font_size = 11
+text = "CONTROLS REFERENCE:
+  WASD         — Move (Camera Relative)
+  Shift + WASD — Sprint
+  Mouse        — Orbit Camera (Pointer Lock)
+  Scroll Wheel — Camera Zoom (3–10m)
+  E            — Interact / Talk / Open / Force
+  Q            — Specialist Tool
+  H            — Radio Hint from Meera
+  M            — Toggle Fullscreen Map Overlay
+  F1           — Dev Debug Panel
+  Esc          — Toggle Pause Menu"
+
+[node name="ResumeBtn" type="Button" parent="CenterContainer/Panel/VBox"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "RESUME GAME"
+
+[node name="MuteBtn" type="Button" parent="CenterContainer/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "AUDIO: [ON]"
+
+[node name="NotesBtn" type="Button" parent="CenterContainer/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "FIELD EVIDENCE & RESEARCH ARCHIVES"
+
+[node name="QuitBtn" type="Button" parent="CenterContainer/Panel/VBox"]
+custom_minimum_size = Vector2(0, 36)
+layout_mode = 2
+text = "QUIT TO MAIN MENU"
+
+[node name="FieldNotesModal" type="PanelContainer" parent="CenterContainer"]
+visible = false
+custom_minimum_size = Vector2(680, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_pm")
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/FieldNotesModal"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ModalTitle" type="Label" parent="CenterContainer/FieldNotesModal/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "DISCOVERED FIELD NOTES & REGULATORY CITATIONS"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="CenterContainer/FieldNotesModal/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NotesVBox" type="VBoxContainer" parent="CenterContainer/FieldNotesModal/VBox/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="CloseNotesBtn" type="Button" parent="CenterContainer/FieldNotesModal/VBox"]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+text = "BACK TO PAUSE MENU"

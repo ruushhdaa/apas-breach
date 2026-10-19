@@ -1,0 +1,331 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://scripts/minimap.gd" id="2_minimap"]
+[ext_resource type="Shader" path="res://shaders/film_grain.gdshader" id="3_grain"]
+[ext_resource type="Shader" path="res://shaders/vignette.gdshader" id="4_vignette"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top"]
+bg_color = Color(0.0392157, 0.0588235, 0.101961, 0.88)
+border_width_bottom = 2
+border_color = Color(0.941176, 0.647059, 0, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_right"]
+bg_color = Color(0.145, 0.168, 0.231, 0.88)
+border_width_left = 2
+border_color = Color(0.941176, 0.647059, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_grain"]
+shader = ExtResource("3_grain")
+shader_parameter/grain_amount = 0.04
+shader_parameter/timer_seed = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vignette"]
+shader = ExtResource("4_vignette")
+shader_parameter/vignette_intensity = 0.35
+shader_parameter/vignette_opacity = 1.0
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="TopBar" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 42)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_top")
+
+[node name="HBox" type="HBoxContainer" parent="TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="HHILabel" type="Label" parent="TopBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "38 — CRITICAL"
+
+[node name="ClockLabel" type="Label" parent="TopBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.95, 1)
+theme_override_font_sizes/font_size = 20
+text = "16:30"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="TopBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "LEVEL 1 — METER 4"
+horizontal_alignment = 2
+
+[node name="RightPanel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(210, 200)
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -215.0
+offset_top = -100.0
+offset_bottom = 100.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_right")
+
+[node name="VBox" type="VBoxContainer" parent="RightPanel"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="RowW" type="HBoxContainer" parent="RightPanel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RightPanel/VBox/RowW"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "W:"
+
+[node name="Value" type="Label" parent="RightPanel/VBox/RowW"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2.50 MLD"
+
+[node name="Arrow" type="Label" parent="RightPanel/VBox/RowW"]
+layout_mode = 2
+text = "—"
+
+[node name="RowP" type="HBoxContainer" parent="RightPanel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RightPanel/VBox/RowP"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "P:"
+
+[node name="Value" type="Label" parent="RightPanel/VBox/RowP"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1.150"
+
+[node name="Arrow" type="Label" parent="RightPanel/VBox/RowP"]
+layout_mode = 2
+text = "—"
+
+[node name="RowH" type="HBoxContainer" parent="RightPanel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RightPanel/VBox/RowH"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "H:"
+
+[node name="Value" type="Label" parent="RightPanel/VBox/RowH"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "71.5 °C"
+
+[node name="Arrow" type="Label" parent="RightPanel/VBox/RowH"]
+layout_mode = 2
+text = "—"
+
+[node name="RowC" type="HBoxContainer" parent="RightPanel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RightPanel/VBox/RowC"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "C:"
+
+[node name="Value" type="Label" parent="RightPanel/VBox/RowC"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "35%"
+
+[node name="Arrow" type="Label" parent="RightPanel/VBox/RowC"]
+layout_mode = 2
+text = "—"
+
+[node name="RowT" type="HBoxContainer" parent="RightPanel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RightPanel/VBox/RowT"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "T:"
+
+[node name="Value" type="Label" parent="RightPanel/VBox/RowT"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "30"
+
+[node name="Arrow" type="Label" parent="RightPanel/VBox/RowT"]
+layout_mode = 2
+text = "—"
+
+[node name="RowS" type="HBoxContainer" parent="RightPanel/VBox"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="RightPanel/VBox/RowS"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "S:"
+
+[node name="Value" type="Label" parent="RightPanel/VBox/RowS"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "100%"
+
+[node name="Arrow" type="Label" parent="RightPanel/VBox/RowS"]
+layout_mode = 2
+text = "—"
+
+[node name="RadioArea" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(340, 75)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = -95.0
+offset_right = 355.0
+offset_bottom = -20.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_top")
+
+[node name="HBox" type="HBoxContainer" parent="RadioArea"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Portrait" type="ColorRect" parent="RadioArea/HBox"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+color = Color(0.290196, 0.560784, 0.619608, 1)
+
+[node name="VBox" type="VBoxContainer" parent="RadioArea/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SpeakerLabel" type="Label" parent="RadioArea/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.290196, 0.560784, 0.619608, 1)
+theme_override_font_sizes/font_size = 13
+text = "MEERA"
+
+[node name="TextLabel" type="Label" parent="RadioArea/HBox/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.88, 0.82, 1)
+theme_override_font_sizes/font_size = 12
+text = "Radio message incoming..."
+autowrap_mode = 2
+
+[node name="TimersArea" type="VBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -215.0
+offset_top = 50.0
+offset_right = -15.0
+offset_bottom = 120.0
+grow_horizontal = 0
+
+[node name="ScrambleLabel" type="Label" parent="TimersArea"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "SCRAMBLE: 1:30"
+horizontal_alignment = 2
+
+[node name="SumpLabel" type="Label" parent="TimersArea"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "SUMP: 4:00"
+horizontal_alignment = 2
+
+[node name="EvidenceHBox" type="HBoxContainer" parent="TimersArea"]
+layout_mode = 2
+alignment = 2
+
+[node name="CornerMinimap" type="Control" parent="."]
+custom_minimum_size = Vector2(220, 220)
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -235.0
+offset_top = -235.0
+offset_right = -15.0
+offset_bottom = -15.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("2_minimap")
+
+[node name="FullscreenMapLayer" type="CanvasLayer" parent="."]
+layer = 45
+visible = false
+
+[node name="CenterContainer" type="CenterContainer" parent="FullscreenMapLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullscreenMap" type="Control" parent="FullscreenMapLayer/CenterContainer"]
+custom_minimum_size = Vector2(620, 620)
+layout_mode = 2
+script = ExtResource("2_minimap")
+is_fullscreen = true
+
+[node name="Crosshair" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CrossV" type="ColorRect" parent="Crosshair"]
+custom_minimum_size = Vector2(2, 20)
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.9)
+
+[node name="CrossH" type="ColorRect" parent="Crosshair"]
+custom_minimum_size = Vector2(20, 2)
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.9)
+
+[node name="PostProcess" type="CanvasLayer" parent="."]
+layer = 99
+
+[node name="FilmGrain" type="ColorRect" parent="PostProcess"]
+material = SubResource("ShaderMaterial_grain")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Vignette" type="ColorRect" parent="PostProcess"]
+material = SubResource("ShaderMaterial_vignette")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

@@ -1,0 +1,96 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ending_layer.gd" id="1_ending"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_end"]
+bg_color = Color(0.04, 0.06, 0.1, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.941176, 0.647059, 0, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="EndingLayer" type="CanvasLayer"]
+layer = 60
+visible = false
+script = ExtResource("1_ending")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(680, 440)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_end")
+
+[node name="VBox" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="OutcomeTitle" type="Label" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 26
+text = "OUTCOME: RESTORED"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+
+[node name="NarrativeText" type="Label" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.91, 0.88, 0.82, 1)
+theme_override_font_sizes/font_size = 18
+text = "The creek is blue. The colony has water.
+The facility is running clean.
+You did something real tonight."
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "FINAL COMPOSITE SCORE: 88.5 / 100
+FINAL HHI: 88 (RESTORED)"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 13
+text = "Potable Draw: 0.00 MLD | PUE: 1.120 | Silicon Tj: 68.2 °C | Creek Health: 95%"
+horizontal_alignment = 1
+
+[node name="SummaryLabel" type="Label" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.8, 1)
+theme_override_font_sizes/font_size = 12
+text = "Decisions Executed: [L1: C] [L2: B] [L3: A] [L4: B] [L5: A]"
+horizontal_alignment = 1
+
+[node name="HBoxButtons" type="HBoxContainer" parent="CenterContainer/PanelContainer/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="RestartButton" type="Button" parent="CenterContainer/PanelContainer/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "PLAY AGAIN (DISPATCH)"
+
+[node name="CreditsButton" type="Button" parent="CenterContainer/PanelContainer/VBox/HBoxButtons"]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.941176, 0.647059, 0, 1)
+text = "VIEW CREDITS"

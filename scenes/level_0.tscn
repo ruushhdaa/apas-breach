@@ -1,0 +1,29 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/world.tscn" id="1_world"]
+[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" path="res://scenes/decision_card.tscn" id="3_decision"]
+[ext_resource type="PackedScene" path="res://scenes/dev_panel.tscn" id="4_dev"]
+[ext_resource type="PackedScene" path="res://scenes/ending_layer.tscn" id="5_ending"]
+[ext_resource type="PackedScene" path="res://scenes/game_over_layer.tscn" id="6_gameover"]
+[ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="7_pause"]
+[ext_resource type="Script" path="res://scripts/mission_manager.gd" id="8_mission"]
+
+[node name="GameMain" type="Node3D"]
+
+[node name="World" parent="." instance=ExtResource("1_world")]
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="DecisionCardLayer" parent="." instance=ExtResource("3_decision")]
+
+[node name="DevPanelLayer" parent="." instance=ExtResource("4_dev")]
+
+[node name="EndingLayer" parent="." instance=ExtResource("5_ending")]
+
+[node name="GameOverLayer" parent="." instance=ExtResource("6_gameover")]
+
+[node name="PauseMenuLayer" parent="." instance=ExtResource("7_pause")]
+
+[node name="MissionManager" type="Node" parent="."]
+script = ExtResource("8_mission")
