@@ -69,3 +69,36 @@
     animation: none !important;
   }
 }
+
+/* Subtle CRT Title Flicker */
+@keyframes titleFlicker {
+  0%, 100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(240, 165, 0, 0.4));
+  }
+  38% {
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(240, 165, 0, 0.4));
+  }
+  39% {
+    opacity: 0.85;
+    filter: drop-shadow(0 0 6px rgba(240, 165, 0, 0.2));
+  }
+  40% {
+    opacity: 1;
+    filter: drop-shadow(0 0 16px rgba(240, 165, 0, 0.4));
+  }
+  74% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.88;
+  }
+  76% {
+    opacity: 1;
+  }
+}
+
+.animate-title-flicker {
+  animation: titleFlicker 5s infinite ease-in-out;
+}
